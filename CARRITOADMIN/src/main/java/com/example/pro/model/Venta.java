@@ -1,12 +1,16 @@
-package com.example.demo.model;
+package com.example.pro.model;
 
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Venta {
 	
 	@Id

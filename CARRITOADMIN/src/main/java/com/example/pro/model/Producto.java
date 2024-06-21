@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.pro.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,8 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Producto {
 	@ManyToOne
     @JoinColumn(nullable = false)
@@ -21,30 +25,6 @@ public class Producto {
     private String Imagen;
     private String Estado;
     
-    public Producto() {
-		super();
-	}
-
-	public Producto(com.example.demo.model.Venta venta, int idProducto, String descripcion, double precioUnidad,
-			int stock, String imagen, String estado) {
-		super();
-		Venta = venta;
-		IdProducto = idProducto;
-		Descripcion = descripcion;
-		PrecioUnidad = precioUnidad;
-		Stock = stock;
-		Imagen = imagen;
-		Estado = estado;
-	}
-
-	public Venta getVenta() {
-		return Venta;
-	}
-
-	public void setVenta(Venta venta) {
-		Venta = venta;
-	}
-
 	public int getIdProducto() {
 		return IdProducto;
 	}
