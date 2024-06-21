@@ -1,15 +1,52 @@
 package com.example.pro.model;
 
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Detalle {
-	private int IdDetalle;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "venta_id", nullable = false)
+	private Venta venta;
+	@ManyToOne
+	@JoinColumn(name = "producto_id", nullable = false)
 	private Producto producto;
 	private int cant;
+	
+	
+	public Detalle(Venta venta, Producto producto, int cant) {
+		super();
+		this.venta = venta;
+		this.producto = producto;
+		this.cant = cant;
+	}
+	
+	public Detalle() {
+		super();
+	}
+
+	public Venta getVenta() {
+		return venta;
+	}
+	public void setVenta(Venta venta) {
+		this.venta = venta;
+	}
+	public Producto getProducto() {
+		return producto;
+	}
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+	public int getCant() {
+		return cant;
+	}
+	public void setCant(int cant) {
+		this.cant = cant;
+	}
 	
 }

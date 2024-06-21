@@ -1,16 +1,15 @@
 package com.example.pro.model;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 
 public class Cliente {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int IdCliente; 
     private String Apellidos;
     private String Nombres;
@@ -21,9 +20,34 @@ public class Cliente {
     private String Password;
     private char Estado;
     
-    private List<Venta> ventas;
     
-    
+	public Cliente(int idCliente, String apellidos, String nombres, String direccion, String fechaNacimiento, char sexo,
+			String correo, String password, char estado) {
+		super();
+		IdCliente = idCliente;
+		Apellidos = apellidos;
+		Nombres = nombres;
+		Direccion = direccion;
+		FechaNacimiento = fechaNacimiento;
+		Sexo = sexo;
+		Correo = correo;
+		Password = password;
+		Estado = estado;
+	}
+	
+	
+	public Cliente() {
+		super();
+	}
+
+
+	public char getEstado() {
+		return Estado;
+	}
+	public void setEstado(char estado) {
+		Estado = estado;
+	}
+	
 	public int getIdCliente() {
 		return IdCliente;
 	}

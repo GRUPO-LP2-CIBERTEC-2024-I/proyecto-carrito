@@ -4,18 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Producto {
-	@ManyToOne
-    @JoinColumn(nullable = false)
-	private Detalle detalle;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int IdProducto; 
@@ -25,6 +17,22 @@ public class Producto {
     private String Imagen;
     private String Estado;
     
+    
+    
+	public Producto(int idProducto, String descripcion, double precioUnidad, int stock, String imagen, String estado) {
+		super();
+		IdProducto = idProducto;
+		Descripcion = descripcion;
+		PrecioUnidad = precioUnidad;
+		Stock = stock;
+		Imagen = imagen;
+		Estado = estado;
+	}
+	
+	public Producto() {
+		super();
+	}
+
 	public int getIdProducto() {
 		return IdProducto;
 	}
