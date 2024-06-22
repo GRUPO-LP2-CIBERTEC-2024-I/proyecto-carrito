@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +38,6 @@ public class Cliente {
 	public Cliente() {
 		super();
 	}
-
-
 	public char getEstado() {
 		return Estado;
 	}

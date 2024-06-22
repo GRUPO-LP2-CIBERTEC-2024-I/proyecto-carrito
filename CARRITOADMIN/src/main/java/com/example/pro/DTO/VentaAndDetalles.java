@@ -3,17 +3,18 @@ package com.example.pro.DTO;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.NoArgsConstructor;
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class VentaAndDetalles {
+	
 	 private VentaDTO ventaDTO;
 	 private List<DetalleDTO> detallesDTO;
+	 
+	 
 	public VentaDTO getVentaDTO() {
 		return ventaDTO;
 	}
@@ -25,7 +26,5 @@ public class VentaAndDetalles {
 	}
 	public void setDetallesDTO(List<DetalleDTO> detallesDTO) {
 		this.detallesDTO = detallesDTO;
-	}
-	 
-	 
+	} 
 }

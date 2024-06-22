@@ -17,8 +17,6 @@ public class Producto {
     private String Imagen;
     private String Estado;
     
-    
-    
 	public Producto(int idProducto, String descripcion, double precioUnidad, int stock, String imagen, String estado) {
 		super();
 		IdProducto = idProducto;

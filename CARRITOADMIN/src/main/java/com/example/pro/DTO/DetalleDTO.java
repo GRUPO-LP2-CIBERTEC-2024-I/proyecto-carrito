@@ -1,35 +1,21 @@
 package com.example.pro.DTO;
 
-import com.example.pro.model.Producto;
-import com.example.pro.model.Venta;
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
 public class DetalleDTO {
-	private int IdDetalle;
-	private Venta venta;
-	private Producto producto;
+	private int producto;
 	private int cant;
 	
-	public Venta getVenta() {
-		return venta;
+	public DetalleDTO() {
+		super();
 	}
-	public void setVenta(Venta venta) {
-		this.venta = venta;
+	public DetalleDTO(int producto, int cant) {
+		super();
+		this.producto = producto;
+		this.cant = cant;
 	}
-	public int getIdDetalle() {
-		return IdDetalle;
-	}
-	public void setIdDetalle(int idDetalle) {
-		IdDetalle = idDetalle;
-	}
-	public Producto getProducto() {
+	public int getProducto() {
 		return producto;
 	}
-	public void setProducto(Producto producto) {
+	public void setProducto(int producto) {
 		this.producto = producto;
 	}
 	public int getCant() {
@@ -38,6 +24,4 @@ public class DetalleDTO {
 	public void setCant(int cant) {
 		this.cant = cant;
 	}
-	
-	
 }

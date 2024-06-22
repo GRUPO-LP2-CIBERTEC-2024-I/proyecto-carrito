@@ -1,10 +1,13 @@
 package com.example.pro.services.Impl;
-import com.example.pro.DTO.DetalleDTO;
 import com.example.pro.DTO.VentaAndDetalles;
+import com.example.pro.model.Cliente;
 import com.example.pro.model.Detalle;
 import com.example.pro.model.Venta;
+import com.example.pro.Repository.IClienteRepository;
 import com.example.pro.Repository.IDetalleRepository;
+import com.example.pro.Repository.IProductoRepository;
 import com.example.pro.Repository.IVentaRepository;
+import com.example.pro.services.IClienteServices;
 import com.example.pro.services.IVentaServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +17,14 @@ import java.util.Optional;
 @Service
 public class VentaServices implements IVentaServices {
 	@Autowired
+	IProductoRepository _productoRepository;
     IVentaRepository _ventaRepository;
 	IDetalleRepository _detalleRepository;
+	IClienteRepository _clienteRepository;
     
-    public VentaServices(IVentaRepository ventaRepository, IDetalleRepository detalleRepository) {
+    public VentaServices(IProductoRepository productoRepository,IClienteRepository clienteRepository, IVentaRepository ventaRepository, IDetalleRepository detalleRepository) {
+    	_productoRepository = productoRepository;
+    	_clienteRepository = clienteRepository;
         _ventaRepository = ventaRepository;
         _detalleRepository = detalleRepository;
     }
@@ -55,9 +62,10 @@ public class VentaServices implements IVentaServices {
 
     @Override
     public Venta SaveVentaAndDetalles(VentaAndDetalles entity) {
+    	
         Venta ventaToSave = new Venta();
         
-        ventaToSave.setCli(entity.getVentaDTO().getCli());
+        ventaToSave.setCli(_clienteRepository.findById(entity.getVentaDTO().getCli()).get());
         ventaToSave.setFechaVenta(entity.getVentaDTO().getFechaVenta());
         ventaToSave.setMonto(entity.getVentaDTO().getMonto());
         
@@ -65,7 +73,7 @@ public class VentaServices implements IVentaServices {
         
         entity.getDetallesDTO().forEach(DetalleDTO ->{
         	Detalle detToSave = new Detalle();
-        	detToSave.setProducto(DetalleDTO.getProducto());
+        	detToSave.setProducto(_productoRepository.findById(DetalleDTO.getProducto()).get());
         	detToSave.setCant(DetalleDTO.getCant());
         	detToSave.setVenta(VentaSaved);
         	_detalleRepository.save(detToSave);
@@ -73,6 +81,4 @@ public class VentaServices implements IVentaServices {
         
         return VentaSaved;
     }
-
-
 }

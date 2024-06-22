@@ -6,13 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Detalle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +20,16 @@ public class Detalle {
 	private Producto producto;
 	private int cant;
 
-
+	public Detalle() {
+		super();
+	}
+	public Detalle(int idDetalle, Venta venta, Producto producto, int cant) {
+		super();
+		IdDetalle = idDetalle;
+		this.venta = venta;
+		this.producto = producto;
+		this.cant = cant;
+	}
 	public int getIdDetalle() {
 		return IdDetalle;
 	}

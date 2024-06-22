@@ -21,19 +21,16 @@ public class Venta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int IdVenta;
-	@OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Detalle> detalles;
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
-	private Cliente Cli;
+	private Cliente cli;
 	private String FechaVenta;
 	private double monto;
 	
-	public Venta(int idVenta, List<Detalle> detalles, Cliente cli, String fechaVenta, double monto) {
+	public Venta(int idVenta, Cliente cli, String fechaVenta, double monto) {
 		super();
 		IdVenta = idVenta;
-		this.detalles = detalles;
-		Cli = cli;
+		this.cli = cli;
 		FechaVenta = fechaVenta;
 		this.monto = monto;
 	}
@@ -58,16 +55,10 @@ public class Venta {
 	public void setIdVenta(int idVenta) {
 		IdVenta = idVenta;
 	}
-	public List<Detalle> getDetalles() {
-		return detalles;
-	}
-	public void setDetalles(List<Detalle> detalles) {
-		this.detalles = detalles;
-	}
 	public Cliente getCli() {
-		return Cli;
+		return cli;
 	}
 	public void setCli(Cliente cli) {
-		Cli = cli;
+		this.cli = cli;
 	}
 }
