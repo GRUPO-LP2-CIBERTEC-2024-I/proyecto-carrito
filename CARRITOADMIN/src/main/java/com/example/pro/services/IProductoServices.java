@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IProductoServices {
     List<Producto> GetAllProductos();
-    Producto FindProductoById(int id);
+    Producto FindProductoByNombre(String nombre);
+    Integer updateProducto(Integer id, Producto producto);
+
 }

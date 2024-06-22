@@ -25,10 +25,20 @@ public class ProductoServices implements IProductoServices {
     }
 
     @Override
-    public Producto FindProductoById(int id) {
-        Optional<Producto> rowInDB = _productoRepository.findById(id);
-        if (rowInDB.isPresent())
-            return rowInDB.get();
-        else
-            return new Producto();    }
+    public Producto FindProductoByNombre(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Integer updateProducto(Integer id, Producto producto) {
+        Optional<Producto> existingProducto = _productoRepository.findById(id);
+        if (existingProducto.isPresent()) {
+            Producto ProductoToUpdate = existingProducto.get();
+            ProductoToUpdate.setStock(producto.getStock());
+            _productoRepository.save(ProductoToUpdate);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

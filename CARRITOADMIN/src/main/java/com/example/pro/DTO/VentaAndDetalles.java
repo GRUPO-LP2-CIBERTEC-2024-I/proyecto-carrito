@@ -1,11 +1,14 @@
 package com.example.pro.DTO;
 
 import java.util.List;
-import com.example.pro.model.Detalle;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class VentaAndDetalles {
