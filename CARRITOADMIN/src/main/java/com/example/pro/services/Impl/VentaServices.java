@@ -28,6 +28,15 @@ public class VentaServices implements IVentaServices {
     }
 
     @Override
+    public Venta FindVentaById(int id) {
+        Optional<Venta> rowInDB = _ventaRepository.findById(id);
+        if (rowInDB.isPresent())
+            return rowInDB.get();
+        else
+            return new Venta();
+    }
+
+    @Override
     public Integer updateVenta(Integer id, Venta venta) {
         Optional<Venta> existingVenta = _ventaRepository.findById(id);
         if (existingVenta.isPresent()) {
