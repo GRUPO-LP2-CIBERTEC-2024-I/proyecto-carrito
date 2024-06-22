@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @Service
 public class DetalleServices implements IDetalleServices {
-
+	@Autowired
     IDetalleRepository _detalleRepository;
-    @Autowired
+    
     public DetalleServices(IDetalleRepository detalleRepository) {
         _detalleRepository = detalleRepository;
     }

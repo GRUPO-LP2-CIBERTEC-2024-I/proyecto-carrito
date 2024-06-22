@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VentaDTO  {
 	private int IdVenta;
-	private List<Detalle> detalles;
 	private Cliente Cli;
 	private String FechaVenta;
 	private double monto;
@@ -34,12 +33,6 @@ public class VentaDTO  {
 	}
 	public void setIdVenta(int idVenta) {
 		IdVenta = idVenta;
-	}
-	public List<Detalle> getDetalles() {
-		return detalles;
-	}
-	public void setDetalles(List<Detalle> detalles) {
-		this.detalles = detalles;
 	}
 	public Cliente getCli() {
 		return Cli;

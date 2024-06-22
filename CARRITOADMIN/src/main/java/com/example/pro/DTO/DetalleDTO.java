@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetalleDTO {
+	private int IdDetalle;
 	private Venta venta;
 	private Producto producto;
 	private int cant;
@@ -18,6 +19,12 @@ public class DetalleDTO {
 	}
 	public void setVenta(Venta venta) {
 		this.venta = venta;
+	}
+	public int getIdDetalle() {
+		return IdDetalle;
+	}
+	public void setIdDetalle(int idDetalle) {
+		IdDetalle = idDetalle;
 	}
 	public Producto getProducto() {
 		return producto;

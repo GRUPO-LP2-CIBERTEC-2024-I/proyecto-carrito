@@ -1,15 +1,22 @@
 package com.example.pro.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
 @Entity
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Detalle {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int IdDetalle;
 	@ManyToOne
 	@JoinColumn(name = "venta_id", nullable = false)
 	private Venta venta;
@@ -17,19 +24,14 @@ public class Detalle {
 	@JoinColumn(name = "producto_id", nullable = false)
 	private Producto producto;
 	private int cant;
-	
-	
-	public Detalle(Venta venta, Producto producto, int cant) {
-		super();
-		this.venta = venta;
-		this.producto = producto;
-		this.cant = cant;
-	}
-	
-	public Detalle() {
-		super();
-	}
 
+
+	public int getIdDetalle() {
+		return IdDetalle;
+	}
+	public void setIdDetalle(int idDetalle) {
+		IdDetalle = idDetalle;
+	}
 	public Venta getVenta() {
 		return venta;
 	}

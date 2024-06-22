@@ -9,5 +9,4 @@ public interface IClienteServices {
     Cliente SaveCliente(Cliente entity);
     Integer updateCliente(Integer id, Cliente cliente);
     Cliente FindClienteById(int id);
-    Integer deleteCliente(Integer id);
 }

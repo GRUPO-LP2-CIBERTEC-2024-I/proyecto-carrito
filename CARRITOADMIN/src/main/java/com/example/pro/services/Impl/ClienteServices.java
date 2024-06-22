@@ -14,9 +14,9 @@ import java.util.Optional;
 
 @Service
 public class ClienteServices implements IClienteServices {
+	
+	@Autowired
     IClienteRepository _clienteRepository;
-
-    @Autowired
     public ClienteServices(IClienteRepository clienteRepository) {
         _clienteRepository = clienteRepository;
     }
@@ -61,14 +61,4 @@ public class ClienteServices implements IClienteServices {
         else
             return new Cliente();    }
 
-    @Override
-    public Integer deleteCliente(Integer id) {
-        Optional<Cliente> optionalCliente = _clienteRepository.findById(id);
-        if (optionalCliente.isPresent()) {
-            _clienteRepository.deleteById(id);
-            return 1;
-        } else {
-            return 0;
-        }
-    }
 }

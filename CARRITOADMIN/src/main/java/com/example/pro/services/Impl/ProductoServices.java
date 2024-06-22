@@ -12,9 +12,11 @@ import java.util.Optional;
 
 @Service
 public class ProductoServices implements IProductoServices {
+	
+	@Autowired
     IProductoRepository _productoRepository;
 
-    @Autowired
+    
     public ProductoServices(IProductoRepository productoRepository) {
         _productoRepository = productoRepository;
     }
