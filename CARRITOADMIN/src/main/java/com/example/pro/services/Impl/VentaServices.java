@@ -2,6 +2,7 @@ package com.example.pro.services.Impl;
 import com.example.pro.DTO.VentaAndDetalles;
 import com.example.pro.model.Cliente;
 import com.example.pro.model.Detalle;
+import com.example.pro.model.Producto;
 import com.example.pro.model.Venta;
 import com.example.pro.Repository.IClienteRepository;
 import com.example.pro.Repository.IDetalleRepository;
@@ -16,17 +17,18 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class VentaServices implements IVentaServices {
-	@Autowired
 	IProductoRepository _productoRepository;
     IVentaRepository _ventaRepository;
 	IDetalleRepository _detalleRepository;
 	IClienteRepository _clienteRepository;
-    
-    public VentaServices(IProductoRepository productoRepository,IClienteRepository clienteRepository, IVentaRepository ventaRepository, IDetalleRepository detalleRepository) {
+    ProductoServices productoServices;
+    @Autowired
+    public VentaServices(IProductoRepository productoRepository,IClienteRepository clienteRepository, IVentaRepository ventaRepository, IDetalleRepository detalleRepository, ProductoServices productoServices) {
     	_productoRepository = productoRepository;
     	_clienteRepository = clienteRepository;
         _ventaRepository = ventaRepository;
         _detalleRepository = detalleRepository;
+        this.productoServices = productoServices;
     }
 
     @Override
@@ -77,6 +79,11 @@ public class VentaServices implements IVentaServices {
         	detToSave.setCant(DetalleDTO.getCant());
         	detToSave.setVenta(VentaSaved);
         	_detalleRepository.save(detToSave);
+            if (detToSave.getProducto() != null) {
+                Producto producto = detToSave.getProducto();
+                producto.setStock(producto.getStock() - detToSave.getCant());
+                productoServices.updateProducto(producto.getIdProducto(), producto);
+            }
         });
         
         return VentaSaved;
