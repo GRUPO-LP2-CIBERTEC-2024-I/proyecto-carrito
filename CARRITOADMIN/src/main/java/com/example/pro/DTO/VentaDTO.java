@@ -1,13 +1,10 @@
 package com.example.pro.DTO;
 
-import com.example.pro.model.Cliente;
-
-
 public class VentaDTO  {
 	private int Cli;
 	private String FechaVenta;
 	private double monto;
-	
+
 	public VentaDTO() {
 		super();
 	}
@@ -35,5 +32,5 @@ public class VentaDTO  {
 	public void setCli(int cli) {
 		Cli = cli;
 	}
-	
+
 }

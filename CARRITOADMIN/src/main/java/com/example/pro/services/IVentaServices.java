@@ -1,9 +1,9 @@
 package com.example.pro.services;
 
+import java.util.List;
+
 import com.example.pro.DTO.VentaAndDetalles;
 import com.example.pro.model.Venta;
-
-import java.util.List;
 
 public interface IVentaServices {
     List<Venta> GetAllVentas();

@@ -1,19 +1,26 @@
 package com.example.pro.Controllers;
 
-import com.example.pro.DTO.VentaAndDetalles;
-import com.example.pro.model.Venta;
-import com.example.pro.services.IVentaServices;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.pro.DTO.VentaAndDetalles;
+import com.example.pro.model.Venta;
+import com.example.pro.services.IVentaServices;
 
 @RestController
 @RequestMapping("/Venta")
 public class VentaController {
-	
+
 	@Autowired
 	IVentaServices ventaServices;
 	public VentaController(IVentaServices ventaServices) {
@@ -44,5 +51,5 @@ public class VentaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 }

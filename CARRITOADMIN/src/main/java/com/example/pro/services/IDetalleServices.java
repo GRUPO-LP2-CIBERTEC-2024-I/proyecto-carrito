@@ -1,9 +1,8 @@
 package com.example.pro.services;
 
-import com.example.pro.model.Detalle;
-
-
 import java.util.List;
+
+import com.example.pro.model.Detalle;
 
 public interface IDetalleServices {
     List<Detalle> GetAllDetalles();

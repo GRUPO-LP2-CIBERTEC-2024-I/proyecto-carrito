@@ -3,7 +3,7 @@ package com.example.pro.DTO;
 public class DetalleDTO {
 	private int producto;
 	private int cant;
-	
+
 	public DetalleDTO() {
 		super();
 	}

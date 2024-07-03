@@ -54,5 +54,5 @@ public class Detalle {
 	public void setCant(int cant) {
 		this.cant = cant;
 	}
-	
+
 }

@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int IdCliente; 
+	private int IdCliente;
     private String Apellidos;
     private String Nombres;
     private String Direccion;
@@ -18,8 +18,8 @@ public class Cliente {
     private String Correo;
     private String Password;
     private char Estado;
-    
-    
+
+
 	public Cliente(int idCliente, String apellidos, String nombres, String direccion, String fechaNacimiento, char sexo,
 			String correo, String password, char estado) {
 		super();
@@ -33,8 +33,8 @@ public class Cliente {
 		Password = password;
 		Estado = estado;
 	}
-	
-	
+
+
 	public Cliente() {
 		super();
 	}
@@ -44,7 +44,7 @@ public class Cliente {
 	public void setEstado(char estado) {
 		Estado = estado;
 	}
-	
+
 	public int getIdCliente() {
 		return IdCliente;
 	}
@@ -93,6 +93,6 @@ public class Cliente {
 	public void setPassword(String password) {
 		Password = password;
 	}
-    
-    
+
+
 }

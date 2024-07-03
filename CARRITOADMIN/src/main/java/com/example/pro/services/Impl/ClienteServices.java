@@ -1,20 +1,18 @@
 package com.example.pro.services.Impl;
 
-import com.example.pro.Repository.IClienteRepository;
-import com.example.pro.Repository.IDetalleRepository;
-import com.example.pro.Repository.IVentaRepository;
-import com.example.pro.model.Cliente;
-import com.example.pro.model.Venta;
-import com.example.pro.services.IClienteServices;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.pro.Repository.IClienteRepository;
+import com.example.pro.model.Cliente;
+import com.example.pro.services.IClienteServices;
+
 @Service
 public class ClienteServices implements IClienteServices {
-	
+
 	@Autowired
     IClienteRepository _clienteRepository;
     public ClienteServices(IClienteRepository clienteRepository) {

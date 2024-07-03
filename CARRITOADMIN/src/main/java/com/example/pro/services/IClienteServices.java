@@ -1,8 +1,8 @@
 package com.example.pro.services;
 
-import com.example.pro.model.Cliente;
-
 import java.util.List;
+
+import com.example.pro.model.Cliente;
 
 public interface IClienteServices {
     List<Cliente> GetAllClientes();

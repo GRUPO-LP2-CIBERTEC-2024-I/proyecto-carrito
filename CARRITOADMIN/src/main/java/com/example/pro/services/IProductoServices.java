@@ -1,8 +1,8 @@
 package com.example.pro.services;
 
-import com.example.pro.model.Producto;
-
 import java.util.List;
+
+import com.example.pro.model.Producto;
 
 public interface IProductoServices {
     List<Producto> GetAllProductos();

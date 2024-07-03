@@ -10,13 +10,13 @@ import jakarta.persistence.Id;
 public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int IdProducto; 
+	private int IdProducto;
     private String Descripcion;
-    private double PrecioUnidad; 
+    private double PrecioUnidad;
     private int Stock;
     private String Imagen;
     private String Estado;
-    
+
 	public Producto(int idProducto, String descripcion, double precioUnidad, int stock, String imagen, String estado) {
 		super();
 		IdProducto = idProducto;
@@ -26,7 +26,7 @@ public class Producto {
 		Imagen = imagen;
 		Estado = estado;
 	}
-	
+
 	public Producto() {
 		super();
 	}
@@ -78,5 +78,5 @@ public class Producto {
 	public void setEstado(String estado) {
 		Estado = estado;
 	}
-    
+
 }
