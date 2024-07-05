@@ -16,7 +16,6 @@ import com.example.pro.model.Cliente;
 import com.example.pro.services.IClienteServices;
 
 
-
 @RestController
 @RequestMapping("/Cliente")
 public class ClienteRestController {

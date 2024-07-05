@@ -54,9 +54,10 @@ public class ClienteServices implements IClienteServices {
     @Override
     public Cliente FindClienteById(int id) {
         Optional<Cliente> rowInDB = _clienteRepository.findById(id);
-        if (rowInDB.isPresent())
-            return rowInDB.get();
-        else
-            return new Cliente();    }
+        if (rowInDB.isPresent()) {
+			return rowInDB.get();
+		} else {
+			return new Cliente();
+		}    }
 
 }
