@@ -44,10 +44,11 @@ public class VentaServices implements IVentaServices {
     @Override
     public Venta FindVentaById(int id) {
         Optional<Venta> rowInDB = _ventaRepository.findById(id);
-        if (rowInDB.isPresent())
-            return rowInDB.get();
-        else
-            return new Venta();
+        if (rowInDB.isPresent()) {
+			return rowInDB.get();
+		} else {
+			return new Venta();
+		}
     }
 
     @Override

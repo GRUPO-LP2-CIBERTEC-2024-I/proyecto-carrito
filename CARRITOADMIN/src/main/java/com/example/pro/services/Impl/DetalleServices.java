@@ -32,10 +32,11 @@ public class DetalleServices implements IDetalleServices {
     @Override
     public Detalle FindDetalleById(int id) {
         Optional<Detalle> rowInDB = _detalleRepository.findById(id);
-        if (rowInDB.isPresent())
-            return rowInDB.get();
-        else
-            return new Detalle();
+        if (rowInDB.isPresent()) {
+			return rowInDB.get();
+		} else {
+			return new Detalle();
+		}
     }
 }
 
