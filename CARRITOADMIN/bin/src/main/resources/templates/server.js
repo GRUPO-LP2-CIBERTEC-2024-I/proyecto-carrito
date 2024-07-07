@@ -90,7 +90,7 @@ router.get('/front/productos', authMiddleware, (req, res) => {
 });
 
 router.get('/front/registro', (req, res) => {
-    res.render('registro', { username: req.session.user.username, id: req.session.user.id });
+    res.render('registro');
 });
 
 router.get('/front/quienessomos', (req, res) => {

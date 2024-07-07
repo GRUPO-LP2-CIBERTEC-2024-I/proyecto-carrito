@@ -19,8 +19,6 @@ p
 @CARRITOADMIN/src/main/java/com/example/pro/CustomCorsConfig.java,9\0\9091c6649ad00cecde357e09026cb3fe73be871f
 o
 ?CARRITOADMIN/bin/src/main/resources/templates/quienessomos.html,c\8\c8b0266cb12aae2e86f03c504eb25f71fbfd5ce8
-o
-?CARRITOADMIN/bin/src/main/resources/templates/js/registroAPI.js,f\d\fd340cebbde8a69c40c1135760e7017eb29aba4e
 p
 @CARRITOADMIN/bin/src/main/resources/templates/js/productosApi.js,e\2\e224cfa88ac96f63d43055cf69418060bbd8a8d8
 k
@@ -37,8 +35,6 @@ ICARRITOADMIN/src/main/java/com/example/pro/services/IClienteServices.java,a\a\
 MCARRITOADMIN/src/main/java/com/example/pro/services/Impl/ClienteServices.java,5\c\5cbc38fadac5b3fbaf5a05f7496c0b8c1c8550eb
 m
 =CARRITOADMIN/src/main/java/com/example/pro/model/Cliente.java,4\1\4199ff2c11180dc8c916c9adf5ecf30c77135a52
-?
-views/index.ejs,4\9\496c03b4d5f1774ceafd2fb8b05f3c5113512c61
 m
 =CARRITOADMIN/bin/src/main/resources/templates/views/index.ejs,d\5\d5841bd8d3a614e82f9890279d32a97c92ab5940
 h
