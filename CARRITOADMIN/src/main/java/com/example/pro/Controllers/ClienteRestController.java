@@ -1,6 +1,7 @@
 package com.example.pro.Controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class ClienteRestController {
 	}
 
 	@GetMapping("/{id}")
-	public Cliente getCli(@RequestParam int id) {
+	public Cliente getCli(@PathVariable int id) {
 		return clienteServices.FindClienteById(id);
 	}
 	@PostMapping("/add")
@@ -41,4 +42,11 @@ public class ClienteRestController {
 	public int putMethodName(@PathVariable int id, @RequestBody Cliente entity) {
 		return clienteServices.updateCliente(id, entity);
 	}
+	@PostMapping("/verificar")
+	public Cliente verificar(@RequestBody Map<String, String> request) {
+		String correo = request.get("correo");
+		String pass = request.get("pass");
+		return clienteServices.VerificarCliente(correo, pass);
+	}
+
 }

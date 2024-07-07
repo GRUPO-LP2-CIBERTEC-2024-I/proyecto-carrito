@@ -40,19 +40,19 @@
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <div id="login-form">
-            <h2 class="form-title">Login</h2>
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Correo electronico" required>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Contraseña" required>
-            </div>
-            <button type="button" class="btn btn-primary btn-block">Iniciar sesión</button>
-            <p class="switch-link">No tengo una cuenta <a href="registro.html">Registrarse</a></p>
+<div class="form-container">
+    <form id="login-form" action="/login" method="post">
+        <h2 class="form-title">Login</h2>
+        <div class="form-group">
+            <input type="text" name="username" class="form-control" placeholder="Nombre de usuario" required>
         </div>
-    </div>
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+        <p class="switch-link">No tengo una cuenta <a href="registro.html">Registrarse</a></p>
+    </form>
+</div>
     
     <script>
     </script>

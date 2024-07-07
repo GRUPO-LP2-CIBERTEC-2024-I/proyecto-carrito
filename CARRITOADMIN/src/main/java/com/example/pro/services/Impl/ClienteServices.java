@@ -60,4 +60,14 @@ public class ClienteServices implements IClienteServices {
 			return new Cliente();
 		}    }
 
+    @Override
+    public Cliente VerificarCliente(String correo, String Pass) {
+        Optional<Cliente> Cli = Optional.ofNullable(_clienteRepository.findbyCorreo(correo));
+        if(Cli.isPresent()) {
+            Cliente cliente =  Cli.get();
+            if(cliente.getPassword().equals(Pass))
+                return cliente;
+        }
+        return null;
+    }
 }

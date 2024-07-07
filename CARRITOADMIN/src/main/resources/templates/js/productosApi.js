@@ -6,8 +6,7 @@ $(document).ready(function() {
         method: 'GET',
         success: function(response) {
             console.log('Response:', response); // Imprime la respuesta en la consola
-            let data = response; // La respuesta ya es un objeto, no necesitas parsearla
-
+            let data = response;
             if (Array.isArray(data)) {
                 let productosContainer = $('#productos-container');
                 productosContainer.empty(); // Limpiar cualquier contenido existente
