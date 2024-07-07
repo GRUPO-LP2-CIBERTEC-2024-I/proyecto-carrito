@@ -109,10 +109,5 @@ function limpiarHtml(){
 }
 
 function comprarProductos() {
-    const logueado = true; 
-    if (logueado) {
-        window.location.href = 'comprar.html';
-    } else {
-        alert('Debes estar logueado para comprar');
-    }
+    window.location.href = '/front/comprar';
 }

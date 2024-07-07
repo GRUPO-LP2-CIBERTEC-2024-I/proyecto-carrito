@@ -1,9 +1,6 @@
 package com.example.pro.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Cliente {
@@ -15,7 +12,8 @@ public class Cliente {
     private String Direccion;
     private String FechaNacimiento;
     private char Sexo;
-    private String Correo;
+	@Column(unique = true)
+	private String Correo;
     private String Password;
     private char Estado;
 
