@@ -1,15 +1,0 @@
-
-,Web:MouseEventWithoutKeyboardEquivalentChecka"?Add a 'onKeyPress|onKeyDown|onKeyUp' attribute to this <a> tag.(†êÁJ$bd4f8695-9d64-450a-8559-839c58cdc5f6
-™	Web:S6819a"^Use <button> or <input> instead of the button role to ensure accessibility across all devices.(†êÁJ$72732751-c5d0-495c-b9f6-e10f778f25de
-¢,Web:MouseEventWithoutKeyboardEquivalentCheckp"?Add a 'onKeyPress|onKeyDown|onKeyUp' attribute to this <a> tag.(Á€ĞßÿÿÿÿÿJ$646deec9-e16f-45be-8007-bb06bda41fee
-	Web:S6819p"^Use <button> or <input> instead of the button role to ensure accessibility across all devices.(Á€ĞßÿÿÿÿÿJ$d8f04e15-d61c-4b00-b7c2-68f3905f9721
-¥,Web:MouseEventWithoutKeyboardEquivalentCheck€"AAdd a 'onKeyPress|onKeyDown|onKeyUp' attribute to this <div> tag.(º¥İÜşÿÿÿÿJ$79c9264e-6a68-40ba-96fe-ef683bcc31c0
-„	Web:S6848€"ÂAvoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.(º¥İÜşÿÿÿÿJ$af7081f3-2a8f-4fcc-a468-81712f54e191
-£,Web:MouseEventWithoutKeyboardEquivalentCheck"?Add a 'onKeyPress|onKeyDown|onKeyUp' attribute to this <a> tag.(¥Ÿ£…şÿÿÿÿJ$ced2f4db-1276-4169-83d7-c3991474bccb
-Ÿ	Web:S6819"^Use <button> or <input> instead of the button role to ensure accessibility across all devices.(¥Ÿ£…şÿÿÿÿJ$c20ad214-d689-4e12-9a42-d4e661c416fb
-£,Web:MouseEventWithoutKeyboardEquivalentCheckŠ"?Add a 'onKeyPress|onKeyDown|onKeyUp' attribute to this <p> tag.(à‰¤´úÿÿÿÿJ$bc1449e9-721d-4f3d-b96c-7cd2b1e2b2ba
-“	Web:S6847Š"RNon-interactive elements should not be assigned mouse or keyboard event listeners.(à‰¤´úÿÿÿÿJ$5f2bac30-60eb-417d-9f2d-b33e64407976
-…	Web:S6851³"IRemove redundant word "image" from the "alt" attribute of your "img" tag.(í—Ç‹J$a3908bb5-148a-4868-b1e9-12834beed76f
-Š	Web:S6851¼"IRemove redundant word "image" from the "alt" attribute of your "img" tag.(›îÂ”ıÿÿÿÿJ$6f44a86c-feed-4548-864b-c022528f7cc4
-Y	css:S4656³"Unexpected duplicate "height"(í—Ç‹J$20b236f0-a568-4862-b909-77d031721b32
-^	css:S4656¼"Unexpected duplicate "height"(›îÂ”ıÿÿÿÿJ$3ade7c76-3a8d-41b3-badd-fdb5d81f7289

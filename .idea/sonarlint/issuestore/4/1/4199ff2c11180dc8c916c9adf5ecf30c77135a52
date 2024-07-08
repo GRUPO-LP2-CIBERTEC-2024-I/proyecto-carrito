@@ -1,12 +1,0 @@
-
-	java:S116	"TRename this field "IdCliente" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œ¬¼ÈJ$a2655692-07a6-4ee4-bcdd-6c8f7dd4d87f
-	java:S116
-"TRename this field "Apellidos" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı¤‡J$7bb3893b-88eb-4211-80db-81a916704e6c
-	java:S116"RRename this field "Nombres" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜­ç»J$5b3ff62f-1ab1-4270-9094-62354e46234b
-”	java:S116"TRename this field "Direccion" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷ëµßùÿÿÿÿJ$7ef7e733-f8f7-4d08-82bf-d5eadedbe82d
-š	java:S116"ZRename this field "FechaNacimiento" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªìòşÿÿÿÿJ$3fe3bef8-2fa4-4b39-a99d-2ce59d19fc18
-	java:S116"ORename this field "Sexo" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü³ÓàúÿÿÿÿJ$e96315a3-e7fe-4615-b114-62837ddab893
-‘	java:S116"QRename this field "Correo" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·°¥ÚşÿÿÿÿJ$75661ea8-122c-4296-9478-e3961a841c86
-“	java:S116"SRename this field "Password" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬›™ÂûÿÿÿÿJ$fc79d388-441c-4fb5-9612-dd85b2d5e14b
-Œ	java:S116"QRename this field "Estado" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óÃÍJ$a72dd0ce-440b-485d-bb54-d93ca7478652
-|	java:S107"AConstructor has 9 parameters, which is greater than 7 authorized.(È—ùJ$d3cece74-acae-4c9b-bf54-3bb07a1368d4

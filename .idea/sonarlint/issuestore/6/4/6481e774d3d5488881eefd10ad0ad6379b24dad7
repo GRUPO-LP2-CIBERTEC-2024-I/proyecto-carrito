@@ -1,7 +1,0 @@
-
-”	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ó¤èIJ$39feab06-a736-4963-92df-326188309080
-œ	java:S116"\Rename this field "_ProductoServices" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•óí‹ÿÿÿÿÿJ$fdd734ea-cc7e-4ffe-884c-b09fe4255cee
-~
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞJ$49949483-fc68-49b9-8cdd-58ff410d1925
-m
-java:S1128"PRemove this unused import 'org.springframework.web.bind.annotation.CrossOrigin'.(º´Ñ†8ÖÚ«¯ˆ2

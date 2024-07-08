@@ -1,10 +1,0 @@
-
-‹	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùËè,J$1d7c5e46-5578-4fc7-aa81-1eabcc854fa7
-˜	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤ÂôÆüÿÿÿÿ8†¤Êˆ2J$d5b012e9-b143-4b57-a01a-c366de29db73
-“	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»£ĞÏ8†¤Êˆ2J$5a5aeeaf-34ab-408b-ae33-a98ad2656c4d
-¥
-java:S1488"dImmediately return this expression instead of assigning it to the temporary variable "clienteSaved".(ƒú¾ùÿÿÿÿJ$f7e51951-c238-4459-9aa8-9170e4472c84
-•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¸úŒJ$4d45d10a-cf9d-42e9-9685-43c318418845
-˜	java:S116"]Rename this field "_clienteRepository" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø¡¼³J$a21f37ea-cca5-4cdb-8fa3-4ae669a701ee
-~
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞJ$d4b2be8d-aaec-483e-a70d-fb4cd8100a21
