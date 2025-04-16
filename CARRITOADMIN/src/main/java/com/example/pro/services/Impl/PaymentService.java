@@ -15,8 +15,8 @@ import com.example.pro.DTO.PaymentIntentDTO;
 @Service
 public class PaymentService {
 	
-	@Value("${config.stripe.secretkey}")
-	private String secretKey;
+//	@Value("${config.stripe.secretkey}")
+//	private String secretKey;
 	
 //	public PaymentIntent paymentIntentDTO(PaymentIntentDTO intent) throws StripeException {
 //		Stripe.apiKey = secretKey;
