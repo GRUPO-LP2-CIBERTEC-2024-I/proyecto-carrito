@@ -1,14 +1,14 @@
 
-USE pro2023;
 
-INSERT ignore INTO producto (descripcion, estado, imagen, precio_unidad, stock) VALUES
+
+INSERT INTO producto (descripcion, estado, imagen, precio_unidad, stock) VALUES
 ('Laptop ASUS Vivobook', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/laptop%20asus%20vivobook.JPG', 799.99, 10),
 ('Smartphone Samsung Galaxy S21', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Smartphone%20Samsung%20Galaxy%20S21.JPG', 999.99, 15),
 ('Tablet Apple iPad Pro', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Tablet%20Apple%20iPad%20Pro.JPG', 1199.99, 5),
 ('Monitor LG UltraWide', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Monitor%20LG%20UltraWide.JPG', 299.99, 20),
 ('Smartwatch Apple Watch Series 6', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Smartwatch%20Apple%20Watch%20Series%206.JPG', 399.99, 12),
 ('Auriculares Sony WH-1000XM4', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Auriculares%20Sony%20WH-1000XM4.JPG', 349.99, 30),
-('C�mara Canon EOS R5', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/C%C3%A1mara%20Canon%20EOS%20R5.JPG', 3899.99, 7),
+('Cámara Canon EOS R5', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/C%C3%A1mara%20Canon%20EOS%20R5.JPG', 3899.99, 7),
 ('Router TP-Link Archer AX6000', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Router%20TP-Link%20Archer%20AX6000.JPG', 299.99, 25),
 ('Disco Duro Externo Seagate 2TB', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Disco%20Duro%20Externo%20Seagate%202TB.JPG', 89.99, 50),
 ('Teclado Mec�nico Razer BlackWidow', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Teclado%20Mec%C3%A1nico%20Razer%20BlackWidow.JPG', 149.99, 40),
@@ -41,10 +41,11 @@ INSERT ignore INTO producto (descripcion, estado, imagen, precio_unidad, stock) 
 ('Impresora Epson EcoTank', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Impresora%20Epson%20EcoTank.JPG', 299.99, 10),
 ('Tablet Amazon Fire HD 10', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Tablet%20Amazon%20Fire%20HD%2010.JPG', 149.99, 20),
 ('Tarjeta Madre ASUS ROG Strix', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Tarjeta%20Madre%20ASUS%20ROG%20Strix.JPG', 249.99, 5),
-('Smart TV LG OLED55CXPUA', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Smart%20TV%20LG%20OLED55CXPUA.JPG', 1499.99, 10);
+('Smart TV LG OLED55CXPUA', 'Nuevo', 'https://grupo-lp2-cibertec-2024-i.github.io/proyecto-carrito/imagenes/Smart%20TV%20LG%20OLED55CXPUA.JPG', 1499.99, 10) 
+ON CONFLICT DO NOTHING;
 
 
-INSERT ignore INTO cliente
+INSERT INTO cliente
            (apellidos
            ,correo
            ,direccion
@@ -54,8 +55,9 @@ INSERT ignore INTO cliente
            ,password
            ,sexo)
 VALUES
-           ('Qui�ones', 'jhantan.q@example.com', 'Av. Siempre Viva 123, Lima, Per�', 'A', '1998-01-15', 'Jhantan', 'password123', 'M'),
+           ('Quiñones', 'jhantan.q@example.com', 'Av. Siempre Viva 123, Lima, Per�', 'A', '1998-01-15', 'Jhantan', 'password123', 'M'),
            ('Trejo', 'anthony.t@example.com', 'Calle Falsa 456, Lima, Per�', 'A', '2002-02-20', 'Anthony', 'password123', 'M'),
            ('Aguirre', 'moises.a@example.com', 'Jr. Real 789, Lima, Per�', 'A', '2001-03-25', 'Moises', 'password123', 'M'),
            ('Portillo', 'gian.p@example.com', 'Pasaje Verdadero 101, Lima, Per�', 'A', '2005-04-30', 'Gian', 'password123', 'M'),
-           ('Ortega', 'cristofer.o@example.com', 'Av. Los Incas 202, Lima, Per�', 'A', '2000-05-10', 'Cristofer', 'password123', 'M');
+           ('Ortega', 'cristofer.o@example.com', 'Av. Los Incas 202, Lima, Per�', 'A', '2000-05-10', 'Cristofer', 'password123', 'M')
+           ON CONFLICT DO NOTHING;

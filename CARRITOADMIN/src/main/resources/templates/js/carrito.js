@@ -12,6 +12,9 @@ let cantidadProductosCarrito = 0;
 // funciones
 cargarEventos();
 function cargarEventos(){
+    console.log(botonComprar);
+    console.log(todosLosContenedoresCarrito);
+    console.log(contenedorCompraCarrito);
     todosLosContenedoresCarrito.addEventListener('click', agregarProducto);
     contenedorCompraCarrito.addEventListener('click', eliminarProducto);
     botonComprar.addEventListener('click', comprarProductos);
