@@ -1,0 +1,2 @@
+exclude:
+  - CARRITOADMIN/bin/src/main/resources/templates/node_modules
