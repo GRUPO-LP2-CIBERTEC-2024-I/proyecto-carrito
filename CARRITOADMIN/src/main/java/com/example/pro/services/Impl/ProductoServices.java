@@ -1,8 +1,11 @@
 package com.example.pro.services.Impl;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.pro.Repository.IProductoRepository;
@@ -12,34 +15,37 @@ import com.example.pro.services.IProductoServices;
 @Service
 public class ProductoServices implements IProductoServices {
 
-	@Autowired
+    @Autowired
     IProductoRepository _productoRepository;
 
-
     public ProductoServices(IProductoRepository productoRepository) {
-        _productoRepository = productoRepository;
+	_productoRepository = productoRepository;
     }
 
     @Override
-    public List<Producto> GetAllProductos() {
-        return _productoRepository.findAll();
+    public Page<Producto> GetAllProductos(String producto, String categoria, Pageable pageable) {
+	System.err.println(producto);
+	if (producto == null || producto.isBlank()) {
+	    return _productoRepository.findAll(pageable);
+	}
+	return _productoRepository.findByDescripcionContainingIgnoreCase(producto, pageable);
     }
 
     @Override
     public Producto FindProductoByNombre(String nombre) {
-        return null;
+	return null;
     }
 
     @Override
     public Integer updateProducto(Integer id, Producto producto) {
-        Optional<Producto> existingProducto = _productoRepository.findById(id);
-        if (existingProducto.isPresent()) {
-            Producto ProductoToUpdate = existingProducto.get();
-            ProductoToUpdate.setStock(producto.getStock());
-            _productoRepository.save(ProductoToUpdate);
-            return 1;
-        } else {
-            return 0;
-        }
+	Optional<Producto> existingProducto = _productoRepository.findById(id);
+	if (existingProducto.isPresent()) {
+	    Producto ProductoToUpdate = existingProducto.get();
+	    ProductoToUpdate.setStock(producto.getStock());
+	    _productoRepository.save(ProductoToUpdate);
+	    return 1;
+	} else {
+	    return 0;
+	}
     }
 }

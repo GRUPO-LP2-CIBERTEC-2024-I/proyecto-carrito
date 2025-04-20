@@ -12,7 +12,7 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IdProducto;
     @Column(unique = true)
-    private String Descripcion;
+    private String descripcion;
     private double PrecioUnidad;
     private int Stock;
     private String Imagen;
@@ -21,7 +21,7 @@ public class Producto {
     public Producto(int idProducto, String descripcion, double precioUnidad, int stock, String imagen, String estado) {
 	super();
 	IdProducto = idProducto;
-	Descripcion = descripcion;
+	this.descripcion = descripcion;
 	PrecioUnidad = precioUnidad;
 	Stock = stock;
 	Imagen = imagen;
@@ -41,11 +41,11 @@ public class Producto {
     }
 
     public String getDescripcion() {
-	return Descripcion;
+	return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-	Descripcion = descripcion;
+	this.descripcion = descripcion;
     }
 
     public double getPrecioUnidad() {
