@@ -24,6 +24,8 @@ import org.springframework.web.filter.CorsFilter;
 import com.example.pro.services.IUsuarioServices;
 import com.example.pro.services.Impl.UsuarioServices;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 
 
 @Configuration
@@ -64,11 +66,14 @@ public class SpringSecurityConfig {
 		.cors(cors -> cors.configurationSource(configurationSource()))	
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 		.csrf(csrf -> csrf.disable())
-		.httpBasic(Customizer.withDefaults())
-		.formLogin(form -> form
-			.defaultSuccessUrl("/Producto/list")
-			    .loginProcessingUrl("/login") // Esta es la URL que Spring "escucha" para hacer login
-			    .permitAll()
+		.logout(logout -> logout
+			    .logoutUrl("/logout")
+			    .invalidateHttpSession(true)
+			    .deleteCookies("JSESSIONID")
+			    .logoutSuccessHandler((request, response, authentication) -> {
+			        response.setStatus(HttpServletResponse.SC_OK);
+			        response.getWriter().write("Sesión cerrada con éxito");
+			    })
 			)
 		.build();
     }
