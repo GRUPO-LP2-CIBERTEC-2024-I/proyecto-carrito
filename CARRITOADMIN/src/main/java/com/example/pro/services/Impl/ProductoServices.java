@@ -24,11 +24,16 @@ public class ProductoServices implements IProductoServices {
 
     @Override
     public Page<Producto> GetAllProductos(String producto, String categoria, Pageable pageable) {
-	System.err.println(producto);
-	if (producto == null || producto.isBlank()) {
+	if ((producto == null || producto.isBlank()) && (categoria == null || categoria.isBlank())) {
 	    return _productoRepository.findAll(pageable);
+	} else if ((producto == null || producto.isBlank())) {
+	    return _productoRepository.findByCategoriaContainingIgnoreCase(categoria, pageable);
+	} else if ((categoria == null || categoria.isBlank())) {
+	    return _productoRepository.findByDescripcionContainingIgnoreCase(producto, pageable);
+	} else {
+	    return _productoRepository.findByDescripcionContainingIgnoreCaseAndCategoriaContainingIgnoreCase(producto,
+		    categoria, pageable);
 	}
-	return _productoRepository.findByDescripcionContainingIgnoreCase(producto, pageable);
     }
 
     @Override

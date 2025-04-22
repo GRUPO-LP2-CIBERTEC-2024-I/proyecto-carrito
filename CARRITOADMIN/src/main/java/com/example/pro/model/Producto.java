@@ -15,6 +15,7 @@ public class Producto {
     private String descripcion;
     private double PrecioUnidad;
     private int Stock;
+    private String categoria;
     private String Imagen;
     private String Estado;
 
@@ -30,6 +31,16 @@ public class Producto {
 
     public Producto() {
 	super();
+    }
+    
+    
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public int getIdProducto() {

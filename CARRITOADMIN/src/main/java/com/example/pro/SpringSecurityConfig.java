@@ -1,5 +1,6 @@
 package com.example.pro;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,9 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource configurationSource() {
 	CorsConfiguration config = new CorsConfiguration();
-	config.setAllowedOriginPatterns(Arrays.asList("*"));
+	config.setAllowedOrigins(Arrays.asList("https://proyectocarritoantonitrejo.netlify.app",
+						"http://localhost:3001",
+						"http://localhost:3000"));	
 	config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
 	config.setAllowedHeaders(
 		Arrays.asList("Authorization", "Content-Type"));

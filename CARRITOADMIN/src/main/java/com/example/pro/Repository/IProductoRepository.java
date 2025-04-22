@@ -1,6 +1,5 @@
 package com.example.pro.Repository;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,5 +11,10 @@ import com.example.pro.model.Producto;
 @Repository
 public interface IProductoRepository extends JpaRepository <Producto,Integer> {
 
-    Page<Producto> findByDescripcionContainingIgnoreCase(String producto, Pageable pageable);
+    Page<Producto> findByDescripcionContainingIgnoreCase(String producto, Pageable pageable); 
+
+    Page<Producto> findByDescripcionContainingIgnoreCaseAndCategoriaContainingIgnoreCase(String producto,
+	    String categoria, Pageable pageable);
+
+    Page<Producto> findByCategoriaContainingIgnoreCase(String categoria, Pageable pageable);
 }
