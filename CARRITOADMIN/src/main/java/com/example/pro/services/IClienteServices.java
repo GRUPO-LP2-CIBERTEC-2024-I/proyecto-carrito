@@ -10,4 +10,5 @@ public interface IClienteServices {
     Integer updateCliente(Integer id, Cliente cliente);
     Cliente FindClienteById(int id);
     Cliente VerificarCliente(String correo, String Pass);
+    Cliente getByDni(String dni);
 }

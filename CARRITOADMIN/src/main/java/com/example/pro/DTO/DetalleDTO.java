@@ -2,6 +2,15 @@ package com.example.pro.DTO;
 
 public class DetalleDTO {
 	private int producto;
+	private String nomProd;
+
+	
+	public String getNomProd() {
+	    return nomProd;
+	}
+	public void setNomProd(String nomProd) {
+	    this.nomProd = nomProd;
+	}
 	private int cant;
 
 	public DetalleDTO() {

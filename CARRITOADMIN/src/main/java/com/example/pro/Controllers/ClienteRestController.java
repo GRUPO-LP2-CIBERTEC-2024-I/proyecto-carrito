@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +36,13 @@ public class ClienteRestController {
 		return clienteServices.FindClienteById(id);
 	}
 	@PostMapping("/add")
-	public Cliente postAddCli(@RequestBody Cliente entity) {
-		return clienteServices.SaveCliente(entity);
+	public ResponseEntity<?> postAddCli(@RequestBody Cliente entity) {
+	    try {		
+		return ResponseEntity.ok(clienteServices.SaveCliente(entity));
+	    } catch (Exception e) {
+		e.printStackTrace();
+		return ResponseEntity.internalServerError().body("error del servidor");
+	    }
 	}
 	@PutMapping("/{id}")
 	public int putMethodName(@PathVariable int id, @RequestBody Cliente entity) {

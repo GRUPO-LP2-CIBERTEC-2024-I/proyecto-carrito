@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.example.pro.model.Cliente;
 
 @Repository
-public interface IClienteRepository extends JpaRepository <Cliente, Integer> {
-    @Query("select p from Cliente p where p.Correo = ?1")
+public interface IClienteRepository extends JpaRepository<Cliente, Integer> {
+    @Query("select p from Cliente p where p.correo = ?1")
     Optional<Cliente> findbyCorreo(String correo);
+
+    Optional<Cliente> findByDni(String dni);
 }

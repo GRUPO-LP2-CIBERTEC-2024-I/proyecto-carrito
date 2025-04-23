@@ -73,6 +73,7 @@ public class VentaServices implements IVentaServices {
 	ventaToSave.setCli(_clienteRepository.findById(entity.getVentaDTO().getCli()).get());
 	ventaToSave.setFechaVenta(entity.getVentaDTO().getFechaVenta());
 	ventaToSave.setMonto(entity.getVentaDTO().getMonto());
+	ventaToSave.setPaymentId(entity.getVentaDTO().getPaymentId());
 
 	Venta VentaSaved = _ventaRepository.save(ventaToSave);
 

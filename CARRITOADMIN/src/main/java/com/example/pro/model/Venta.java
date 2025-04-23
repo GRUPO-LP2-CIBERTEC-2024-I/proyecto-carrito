@@ -20,6 +20,9 @@ public class Venta {
 	private Cliente cli;
 	private String FechaVenta;
 	private double monto;
+	private String metodo;
+	private  String paymentId;
+
 
 	public Venta(int idVenta, Cliente cli, String fechaVenta, double monto) {
 		super();
@@ -54,5 +57,17 @@ public class Venta {
 	}
 	public void setCli(Cliente cli) {
 		this.cli = cli;
+	}
+	public String getPaymentId() {
+	    return paymentId;
+	}
+	public void setPaymentId(String paymentId) {
+	    this.paymentId = paymentId;
+	}
+	public String getMetodo() {
+	    return metodo;
+	}
+	public void setMetodo(String metodo) {
+	    this.metodo = metodo;
 	}
 }

@@ -13,8 +13,19 @@ public class Cliente {
     private String FechaNacimiento;
     private char Sexo;
     @Column(unique = true)
-    private String Correo;
+    private String correo;
+    @Column(unique = true)
+    private String dni;
     private String Password;
+    private String telefono;
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     private char Estado;
 
     public Cliente(int idCliente, String apellidos, String nombres, String direccion, String fechaNacimiento, char sexo,
@@ -26,7 +37,7 @@ public class Cliente {
 	Direccion = direccion;
 	FechaNacimiento = fechaNacimiento;
 	Sexo = sexo;
-	Correo = correo;
+	this.correo = correo;
 	Password = password;
 	Estado = estado;
     }
@@ -92,11 +103,11 @@ public class Cliente {
     }
 
     public String getCorreo() {
-	return Correo;
+	return correo;
     }
 
     public void setCorreo(String correo) {
-	Correo = correo;
+	this.correo = correo;
     }
 
     public String getPassword() {
@@ -105,6 +116,14 @@ public class Cliente {
 
     public void setPassword(String password) {
 	Password = password;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
 }

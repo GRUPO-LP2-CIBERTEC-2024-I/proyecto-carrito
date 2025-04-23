@@ -53,4 +53,9 @@ public class ProductoServices implements IProductoServices {
 	    return 0;
 	}
     }
+
+    @Override
+    public Producto getById(int producto) {
+	return _productoRepository.findById(producto).get();
+    }
 }

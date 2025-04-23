@@ -13,7 +13,6 @@ public class VentaAndDetalles {
 	 private VentaDTO ventaDTO;
 	 private List<DetalleDTO> detallesDTO;
 
-
 	public VentaDTO getVentaDTO() {
 		return ventaDTO;
 	}
@@ -25,5 +24,6 @@ public class VentaAndDetalles {
 	}
 	public void setDetallesDTO(List<DetalleDTO> detallesDTO) {
 		this.detallesDTO = detallesDTO;
-	}
+	}	
+	
 }

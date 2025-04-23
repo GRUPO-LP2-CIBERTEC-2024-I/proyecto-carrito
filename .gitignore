@@ -2,4 +2,4 @@
 # Ignorar dependencias de Node
 node_modules/
 # Ignorar todos los .properties
-*.properties
+#*.properties

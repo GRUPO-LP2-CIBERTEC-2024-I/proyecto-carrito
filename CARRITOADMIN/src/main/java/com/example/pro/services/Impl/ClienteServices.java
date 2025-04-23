@@ -72,4 +72,9 @@ public class ClienteServices implements IClienteServices {
 	}
 	return null;
     }
+
+    @Override
+    public Cliente getByDni(String dni) {
+	return _clienteRepository.findByDni(dni).orElseThrow();
+    }
 }

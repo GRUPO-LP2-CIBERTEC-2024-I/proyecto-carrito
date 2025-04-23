@@ -12,5 +12,5 @@ public interface IProductoServices {
     Producto FindProductoByNombre(String nombre);
     Integer updateProducto(Integer id, Producto producto);
     Page<Producto> GetAllProductos(String nombre, String categoria, Pageable pageable);
-
+    Producto getById(int producto);    
 }
