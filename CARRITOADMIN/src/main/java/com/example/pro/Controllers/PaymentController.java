@@ -65,7 +65,7 @@ public class PaymentController {
 
 	    BackUrls backUrls = new BackUrls();
 	    backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
-	    	.setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
+		    .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
 		    .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
 
 	    preference.setBackUrls(backUrls);
@@ -89,15 +89,15 @@ public class PaymentController {
 	    try {
 		Payment payment = Payment.findById(paymentId.toString());
 		System.out.println("estado del pago:" + payment.getStatusDetail());
-		String statusPayment = payment.getStatus().name();
+		String statusPayment = payment.getStatus().name().toString();
 		switch (statusPayment.toLowerCase()) {
 		case "approved": {
-
 		    iPaymentService.generarVentaConMercadoPago(payment);
+		    break;
 		}
 		case "refunded": {
-
 		    iPaymentService.cancelarVenta(payment);
+		    break;
 		}
 		default:
 		    throw new IllegalArgumentException("value: " + statusPayment);
