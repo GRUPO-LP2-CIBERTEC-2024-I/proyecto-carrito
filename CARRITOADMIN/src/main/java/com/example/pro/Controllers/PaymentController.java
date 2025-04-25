@@ -18,6 +18,8 @@ import com.example.pro.services.IClienteServices;
 import com.example.pro.services.IPaymentService;
 import com.example.pro.services.IProductoServices;
 import com.example.pro.services.Impl.PaymentService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mercadopago.resources.Payment;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.preference.Address;
@@ -39,12 +41,9 @@ public class PaymentController {
 
     @Autowired
     private IPaymentService iPaymentService;
-    
+
     @Autowired
     private IProductoServices iProductoServices;
-    
-    @Autowired
-    private IClienteServices iClienteServices;
 
     @PostMapping("/crear-preferencia")
     public ResponseEntity<?> crearPreferencia(@RequestBody VentaAndDetalles venta) {
@@ -52,45 +51,32 @@ public class PaymentController {
 	    Preference preference = new Preference();
 	    PaymentMethods payMethods = new PaymentMethods();
 	    payMethods.setInstallments(1);
-	    preference.setPaymentMethods(payMethods );
+	    preference.setPaymentMethods(payMethods);
 	    venta.getDetallesDTO().forEach(detalle -> {
 		Producto pro = iProductoServices.getById(detalle.getProducto());
 		Item item = new Item();
-		item.setTitle(detalle.getNomProd())
-		.setQuantity(detalle.getCant())
-		.setUnitPrice(Float.parseFloat(pro.getPrecioUnidad()+""));
+		item.setTitle(detalle.getNomProd()).setQuantity(detalle.getCant())
+			.setUnitPrice(Float.parseFloat(pro.getPrecioUnidad() + ""));
 		preference.appendItem(item);
 	    });
-	    Cliente cli = iClienteServices.FindClienteById(venta.getVentaDTO().getCli()); 
-	    Payer payer = new Payer();
-	    payer.setDateCreated(LocalDate.now().toString());
-	    payer.setName(cli.getNombres());
-	    payer.setSurname(cli.getApellidos());
-	    payer.setPhone(new Phone().setNumber(cli.getTelefono()));
-	    payer.setEmail(cli.getCorreo());
-	    payer.setAddress(new Address().setStreetName(cli.getDireccion()));
-	    Identification ident = new Identification();
-	    ident.setType("DNI");
-	    ident.setNumber(cli.getDni());
-	    payer.setIdentification(ident);
-	    System.err.println("identificador: "+ ident.getNumber());
-	    preference.setPayer(payer);
+	    Gson gsson = new Gson();
+	    JsonObject metadata = gsson.toJsonTree(venta).getAsJsonObject();
+	    preference.setMetadata(metadata);
 
 	    BackUrls backUrls = new BackUrls();
-	    backUrls.setSuccess("https://tu-front.com/pago-exitoso")
-	    .setFailure("https://tu-front.com/pago-fallido")
-		    .setPending("https://tu-front.com/pago-pendiente");
+	    backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
+	    	.setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
+		    .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
 
 	    preference.setBackUrls(backUrls);
 	    preference.setAutoReturn(Preference.AutoReturn.approved);
 
 	    Preference savedPreference = preference.save();
-
+	    System.err.println("metadata: " + savedPreference.getMetadata());
 	    return ResponseEntity
 		    .ok(Map.of("id", savedPreference.getId(), "init_point", savedPreference.getInitPoint()));
 
 	} catch (Exception e) {
-	    e.printStackTrace();
 	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la preferencia");
 	}
     }
@@ -102,12 +88,21 @@ public class PaymentController {
 	if ("payment".equalsIgnoreCase(topic)) {
 	    try {
 		Payment payment = Payment.findById(paymentId.toString());
-		System.out.println(payment.getStatusDetail());
-		if ("approved".equalsIgnoreCase(payment.getStatus().name())) {
+		System.out.println("estado del pago:" + payment.getStatusDetail());
+		String statusPayment = payment.getStatus().name();
+		switch (statusPayment.toLowerCase()) {
+		case "approved": {
+
 		    iPaymentService.generarVentaConMercadoPago(payment);
-		} else {
-		    System.out.println("⚠️ Pago no aprobado: " + payment.getStatus());
 		}
+		case "refunded": {
+
+		    iPaymentService.cancelarVenta(payment);
+		}
+		default:
+		    throw new IllegalArgumentException("value: " + statusPayment);
+		}
+
 	    } catch (Exception e) {
 		e.printStackTrace();
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar webhook");

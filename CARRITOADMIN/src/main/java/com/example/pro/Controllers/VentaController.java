@@ -26,6 +26,11 @@ public class VentaController {
 	public VentaController(IVentaServices ventaServices) {
 		this.ventaServices=ventaServices;
 	}
+	@GetMapping("/mis-ventas")
+	public List<Venta> getMethodName() {
+		return ventaServices.misVentas();
+	}
+	
 
 	@GetMapping("/list")
 	public List<Venta> getAll() {

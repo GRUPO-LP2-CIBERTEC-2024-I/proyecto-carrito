@@ -1,19 +1,16 @@
 package com.example.pro.DTO;
 
 public class VentaDTO {
-    private int Cli;
+    private String cli;
     private String FechaVenta;
     private double monto;
-    private String paymentId;
-    private String metodo;
-
     public VentaDTO() {
 	super();
     }
 
-    public VentaDTO(int cli, String fechaVenta, double monto) {
+    public VentaDTO(String cli, String fechaVenta, double monto) {
 	super();
-	Cli = cli;
+	this.cli = cli;
 	FechaVenta = fechaVenta;
 	this.monto = monto;
     }
@@ -35,29 +32,12 @@ public class VentaDTO {
 	this.monto = monto;
     }
 
-    public int getCli() {
-	return Cli;
+    public String getCli() {
+	return cli;
     }
 
-    public void setCli(int cli) {
-	Cli = cli;
-    }
-
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public String getMetodo() {
-        return metodo;
-    }
-
-    public void setMetodo(String metodo) {
-        this.metodo = metodo;
-    }
-    
+    public void setCli(String cli) {
+	this.cli = cli;
+    }    
 
 }

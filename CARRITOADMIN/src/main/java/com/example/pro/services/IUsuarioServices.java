@@ -4,5 +4,5 @@ import com.example.pro.model.Cliente;
 
 public interface IUsuarioServices {
     
-
+    Cliente getUsuarioActual();
 }

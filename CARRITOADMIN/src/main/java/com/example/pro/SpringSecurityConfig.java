@@ -58,11 +58,14 @@ public class SpringSecurityConfig {
 	System.err.println(passwordEncoder().encode("admin"));
 	return http.authorizeHttpRequests((authz) -> authz
 		// TODOS LOS USUARIOS
-		.requestMatchers("/", "/login","/Producto/list","/swagger-ui/**","/pago/crear-preferencia","/pago","/Cliente/add").permitAll()
-		.requestMatchers(HttpMethod.POST, "/Producto/**").hasAnyRole("CLIENTE")
+		.requestMatchers("/", "/login","/Producto/list","/swagger-ui/**","/pago","/Cliente/add").permitAll()
+		.requestMatchers(HttpMethod.POST, "/pago/crear-preferencia").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")		
 		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")		
 		.requestMatchers(HttpMethod.PUT, "/Cliente/**").hasAnyRole("CLIENTE")		
+		.requestMatchers(HttpMethod.GET, "/Venta/**").hasAnyRole("CLIENTE")		
+		.requestMatchers(HttpMethod.POST, "/Venta/**").hasAnyRole("CLIENTE")		
+		.requestMatchers(HttpMethod.PUT, "/Venta/**").hasAnyRole("CLIENTE")		
 		.anyRequest().authenticated())
 		.cors(cors -> cors.configurationSource(configurationSource()))	
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))

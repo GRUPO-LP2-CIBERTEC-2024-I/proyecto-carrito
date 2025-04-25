@@ -2,28 +2,27 @@ package com.example.pro.DTO;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class VentaAndDetalles {
+    
+    @SerializedName("pedido_dto")
 
-	 private VentaDTO ventaDTO;
-	 private List<DetalleDTO> detallesDTO;
+    private PedidoDTO pedidoDTO;
+    @SerializedName("pago_dto")
+    private PagoDTO pagoDTO;
+    @SerializedName("venta_dto")
+    private VentaDTO ventaDTO;
+    @SerializedName("detalles_dto")
+    private List<DetalleDTO> detallesDTO;
 
-	public VentaDTO getVentaDTO() {
-		return ventaDTO;
-	}
-	public void setVentaDTO(VentaDTO ventaDTO) {
-		this.ventaDTO = ventaDTO;
-	}
-	public List<DetalleDTO> getDetallesDTO() {
-		return detallesDTO;
-	}
-	public void setDetallesDTO(List<DetalleDTO> detallesDTO) {
-		this.detallesDTO = detallesDTO;
-	}	
-	
 }

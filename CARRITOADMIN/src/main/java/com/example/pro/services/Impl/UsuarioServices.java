@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.example.pro.Repository.IClienteRepository;
 import com.example.pro.model.Cliente;
 import com.example.pro.services.IUsuarioServices;
+
 
 @Service
 public class UsuarioServices implements IUsuarioServices, UserDetailsService {
@@ -35,9 +37,17 @@ public class UsuarioServices implements IUsuarioServices, UserDetailsService {
 	    throw new UsernameNotFoundException(username);
 	}
 	Cliente cli = optional.orElseThrow();
-	List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("CLIENTE"));
+	List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_CLIENTE"));
 	return new User(cli.getCorreo(), cli.getPassword(), 
 		true, true, true, true, authorities);
+    }
+    
+    
+    @Override
+    public Cliente getUsuarioActual() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Aquí debes obtener el usuario desde tu repositorio de usuarios
+        return clienteRepository.findbyCorreo(username).orElse(null);
     }
 
 }
