@@ -58,7 +58,7 @@ public class SpringSecurityConfig {
 	System.err.println(passwordEncoder().encode("admin"));
 	return http.authorizeHttpRequests((authz) -> authz
 		// TODOS LOS USUARIOS
-		.requestMatchers("/", "/login","/Producto/list","/swagger-ui/**","/pago","/Cliente/add").permitAll()
+		.requestMatchers("/", "/login","/Producto/list","/swagger-ui/**","/pago","/Cliente/add","/webhook").permitAll()
 		.requestMatchers(HttpMethod.POST, "/pago/crear-preferencia").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")		
 		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")		

@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.mercadopago.MercadoPago;
-
+@EnableFeignClients
 @SpringBootApplication
 public class CarritoadminApplication implements CommandLineRunner {
     	@Value("${MP_ACCESS_TOKEN}")
