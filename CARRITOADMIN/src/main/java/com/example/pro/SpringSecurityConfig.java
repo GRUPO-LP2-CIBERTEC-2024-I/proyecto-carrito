@@ -92,18 +92,38 @@ public class SpringSecurityConfig {
 
     @Bean
     CorsConfigurationSource configurationSource() {
-	CorsConfiguration config = new CorsConfiguration();
-	config.setAllowedOrigins(Arrays.asList("https://proyectocarritoantonitrejo.netlify.app",
-						"http://localhost:3001",
-						"http://localhost:3000"));
-	config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
-	config.setAllowedHeaders(
-		Arrays.asList("Authorization", "Content-Type"));
-	config.setAllowCredentials(true);
+      CorsConfiguration config = new CorsConfiguration();
+      config.setAllowedOrigins(Arrays.asList(
+        "https://proyectocarritoantonitrejo.netlify.app",
+        "http://localhost:3001",
+        "http://localhost:3000",
+        // prueba con dominios de mercado pago aiudaaaaa
+        "https://www.mercadopago.com",
+        "https://www.mercadopago.com.pe",
+        "https://api.mercadopago.com",
+        "https://api.mercadolibre.com"
+      ));
+      config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
+      config.setAllowedHeaders(Arrays.asList(
+        "Authorization",
+        "Content-Type",
+        "X-Requested-With",
+        "Accept",
+        "Origin",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers"
+      ));
+      config.setExposedHeaders(Arrays.asList(
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Set-Cookie"
+      ));
+      config.setAllowCredentials(true);
+      config.setMaxAge(3600L); // Cache preflight por 1 hora
 
-	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	source.registerCorsConfiguration("/**", config);
-	return source;
+      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", config);
+      return source;
     }
 
     @Bean
@@ -120,41 +140,51 @@ public class SpringSecurityConfig {
 
     registrationBean.setFilter((request, response, chain) -> {
       jakarta.servlet.http.HttpServletResponse httpResponse = (jakarta.servlet.http.HttpServletResponse) response;
+      jakarta.servlet.http.HttpServletRequest httpRequest = (jakarta.servlet.http.HttpServletRequest) request;
 
+      // Completamos la cadena de filtros primero
       chain.doFilter(request, httpResponse);
+
+      // Registramos información para diagnóstico
+      System.out.println("URL solicitada: " + httpRequest.getRequestURL());
 
       // Capturar y modificar todas las cookies después del filtrado
       Collection<String> headers = httpResponse.getHeaders("Set-Cookie");
       if (!headers.isEmpty()) {
-        // fundamental limpiar las cabeceras de los set-cookie existentes
+        System.out.println("Cookies antes de modificar: " + headers);
+
+        // Fundamental limpiar las cabeceras de los set-cookie existentes
         httpResponse.setHeader("Set-Cookie", null);
 
         // Agregar las cabeceras modificadas
         for (String header : headers) {
-          // Si la cookie ya contiene SameSite=None, no la modificamos amikos
-          if (!header.contains("SameSite=None")) {
-            if (header.contains("JSESSIONID")) {
-              String newHeader = header;
-              if (!newHeader.contains("Secure")) {
-                newHeader += "; Secure";
-              }
-              newHeader += "; SameSite=None";
-              httpResponse.addHeader("Set-Cookie", newHeader);
-            } else {
-              // Para otras cookies, mantenemos el encabezado original
-              httpResponse.addHeader("Set-Cookie", header);
+          // Modificamos todas las cookies JSESSIONID
+          if (header.contains("JSESSIONID")) {
+            String newHeader = header;
+            // Aseguramos que tenga Secure
+            if (!newHeader.contains("Secure")) {
+              newHeader += "; Secure";
             }
+            // Aseguramos que tenga SameSite=None
+            if (!newHeader.contains("SameSite=None")) {
+              newHeader += "; SameSite=None";
+            }
+            httpResponse.addHeader("Set-Cookie", newHeader);
+            System.out.println("Cookie JSESSIONID modificada: " + newHeader);
           } else {
-            // mantenemos la cookie que ya tiene SameSite=None
+            // Para otras cookies, mantenemos el encabezado original
             httpResponse.addHeader("Set-Cookie", header);
           }
         }
+        System.out.println("Cookies después de modificar: " + httpResponse.getHeaders("Set-Cookie"));
       }
     });
 
     registrationBean.addUrlPatterns("/*");
-    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Justo después del CORS
+    // Mayor prioridad para asegurar que se ejecute antes que otros filtros
+    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return registrationBean;
   }
 
+  
 }
