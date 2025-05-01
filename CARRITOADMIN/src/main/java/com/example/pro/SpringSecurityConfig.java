@@ -2,6 +2,7 @@ package com.example.pro;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -24,7 +25,9 @@ import org.springframework.web.filter.CorsFilter;
 
 import com.example.pro.services.IUsuarioServices;
 import com.example.pro.services.Impl.UsuarioServices;
+import com.google.common.net.HttpHeaders;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.http.HttpServletResponse;
 
 
@@ -105,4 +108,35 @@ public class SpringSecurityConfig {
 	corsbean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	return corsbean;
     }
+    
+    @Bean
+    public FilterRegistrationBean<Filter> sameSiteCookieFilter() {
+        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
+
+        registrationBean.setFilter((request, response, chain) -> {
+            chain.doFilter(request, response);
+
+            if (response instanceof HttpServletResponse) {
+                HttpServletResponse res = (HttpServletResponse) response;
+                Collection<String> headers = res.getHeaders(HttpHeaders.SET_COOKIE);
+                boolean firstHeader = true;
+                for (String header : headers) {
+                    if (header.contains("JSESSIONID")) {
+                        String updatedHeader = header + "; SameSite=None; Secure";
+                        if (firstHeader) {
+                            res.setHeader(HttpHeaders.SET_COOKIE, updatedHeader);
+                            firstHeader = false;
+                        } else {
+                            res.addHeader(HttpHeaders.SET_COOKIE, updatedHeader);
+                        }
+                    }
+                }
+            }
+        });
+
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Justo después del CORS
+        return registrationBean;
+    }
+
 }

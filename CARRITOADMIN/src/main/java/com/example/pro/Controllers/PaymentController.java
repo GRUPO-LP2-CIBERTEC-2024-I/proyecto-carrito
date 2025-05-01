@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pro.DTO.PaymentIntentDTO;
 import com.example.pro.DTO.VentaAndDetalles;
+import com.example.pro.DTO.VentaDTO;
 import com.example.pro.model.Cliente;
 import com.example.pro.model.Producto;
 import com.example.pro.services.IClienteServices;
 import com.example.pro.services.IPaymentService;
 import com.example.pro.services.IProductoServices;
+import com.example.pro.services.IUsuarioServices;
 import com.example.pro.services.Impl.PaymentService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -45,6 +47,9 @@ public class PaymentController {
 
     @Autowired
     private IProductoServices iProductoServices;
+    
+    @Autowired
+    private IUsuarioServices _IUsuarioServices;
 
     @PostMapping("/crear-preferencia")
     public ResponseEntity<?> crearPreferencia(@RequestBody VentaAndDetalles venta) {
@@ -53,6 +58,9 @@ public class PaymentController {
 	    PaymentMethods payMethods = new PaymentMethods();
 	    payMethods.setInstallments(1);
 	    preference.setPaymentMethods(payMethods);
+	    VentaDTO ventadto = venta.getVentaDTO();
+	    ventadto.setCli(_IUsuarioServices.getUsuarioActual().getCorreo());
+	    venta.setVentaDTO(ventadto);
 	    venta.getDetallesDTO().forEach(detalle -> {
 		Producto pro = iProductoServices.getById(detalle.getProducto());
 		Item item = new Item();
@@ -75,7 +83,7 @@ public class PaymentController {
 	    Preference savedPreference = preference.save();
 	    System.err.println("metadata: " + savedPreference.getMetadata());
 	    return ResponseEntity
-		    .ok(Map.of("id", savedPreference.getId(), "init_point", savedPreference.getInitPoint()));
+		    .ok(Map.of("id", savedPreference.getId(), "init_point", savedPreference.getSandboxInitPoint()));
 
 	} catch (Exception e) {
 	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la preferencia");

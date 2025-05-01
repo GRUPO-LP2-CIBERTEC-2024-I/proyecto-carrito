@@ -1,11 +1,15 @@
 package com.example.pro.services.Impl;
 
+import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.pro.DTO.PagoDTO;
 import com.example.pro.DTO.PedidoDTO;
@@ -19,9 +23,13 @@ import com.example.pro.model.Pedido;
 import com.example.pro.model.Venta;
 import com.example.pro.services.IClienteServices;
 import com.example.pro.services.IPaymentService;
+import com.example.pro.services.IReporteServices;
 import com.example.pro.services.IVentaServices;
 import com.google.gson.Gson;
+import com.google.rpc.context.AttributeContext.Resource;
 import com.mercadopago.resources.Payment;
+
+import io.grpc.netty.shaded.io.netty.util.internal.ResourcesUtil;
 
 @Service
 public class PaymentService implements IPaymentService {
@@ -32,7 +40,8 @@ public class PaymentService implements IPaymentService {
     private IVentaServices iVentaServices;
     @Autowired
     private IPagoRepository _IPagoRepository;
-    
+    @Autowired
+    private IReporteServices _IReporteServices;
         
     @Autowired
     private Gson gson;
@@ -54,8 +63,11 @@ public class PaymentService implements IPaymentService {
 	venta.setVentaDTO(ventadto);
 	venta.setPagoDTO(pago);
 	log.info("generando la venta con el pago: "+payment.getId());
-	iVentaServices.SaveVentaAndDetalles(venta);
-	System.out.println("✅ Venta registrada: " + venta);
+	Venta ventaSaved = iVentaServices.SaveVentaAndDetalles(venta);
+	System.out.println("✅ Venta registrada: " + ventaSaved.getIdVenta());
+//	 byte[] imageBytes =  _IReporteServices.generarBoleta(ventaSaved);
+//	 Resource imagenResource = Resourceut
+//	
 
     }
     @Override

@@ -109,4 +109,12 @@ public class Venta {
 	this.paymentId = paymentId;
     }
 
+    public List<Detalle> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<Detalle> detalles) {
+        this.detalles = detalles;
+    }
+
 }
