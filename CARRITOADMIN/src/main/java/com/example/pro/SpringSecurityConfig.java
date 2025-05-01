@@ -42,7 +42,7 @@ public class SpringSecurityConfig {
     PasswordEncoder passwordEncoder() {
 	return new BCryptPasswordEncoder();
     }
-    
+
     @Autowired
     private UsuarioServices usuarioServices;
 
@@ -63,15 +63,20 @@ public class SpringSecurityConfig {
 		// TODOS LOS USUARIOS
 		.requestMatchers("/", "/login","/Producto/list","/swagger-ui/**","/pago","/Cliente/add","/webhook").permitAll()
 		.requestMatchers(HttpMethod.POST, "/pago/crear-preferencia").hasAnyRole("CLIENTE")
-		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")		
-		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")		
-		.requestMatchers(HttpMethod.PUT, "/Cliente/**").hasAnyRole("CLIENTE")		
-		.requestMatchers(HttpMethod.GET, "/Venta/**").hasAnyRole("CLIENTE")		
-		.requestMatchers(HttpMethod.POST, "/Venta/**").hasAnyRole("CLIENTE")		
-		.requestMatchers(HttpMethod.PUT, "/Venta/**").hasAnyRole("CLIENTE")		
+		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")
+		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")
+		.requestMatchers(HttpMethod.PUT, "/Cliente/**").hasAnyRole("CLIENTE")
+		.requestMatchers(HttpMethod.GET, "/Venta/**").hasAnyRole("CLIENTE")
+		.requestMatchers(HttpMethod.POST, "/Venta/**").hasAnyRole("CLIENTE")
+		.requestMatchers(HttpMethod.PUT, "/Venta/**").hasAnyRole("CLIENTE")
 		.anyRequest().authenticated())
-		.cors(cors -> cors.configurationSource(configurationSource()))	
-		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+		.cors(cors -> cors.configurationSource(configurationSource()))
+    // Cambiamos la política de sesión a IF_REQUIRED para mayor compatibilidad
+    .sessionManagement(session -> session
+      .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+      // Configurando el cookie de sesión explícitamente
+      .sessionFixation().migrateSession()
+    )
 		.csrf(csrf -> csrf.disable())
 		.logout(logout -> logout
 			    .logoutUrl("/logout")
@@ -90,7 +95,7 @@ public class SpringSecurityConfig {
 	CorsConfiguration config = new CorsConfiguration();
 	config.setAllowedOrigins(Arrays.asList("https://proyectocarritoantonitrejo.netlify.app",
 						"http://localhost:3001",
-						"http://localhost:3000"));	
+						"http://localhost:3000"));
 	config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
 	config.setAllowedHeaders(
 		Arrays.asList("Authorization", "Content-Type"));
@@ -108,35 +113,48 @@ public class SpringSecurityConfig {
 	corsbean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	return corsbean;
     }
-    
-    @Bean
-    public FilterRegistrationBean<Filter> sameSiteCookieFilter() {
-        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 
-        registrationBean.setFilter((request, response, chain) -> {
-            chain.doFilter(request, response);
+  @Bean
+  public FilterRegistrationBean<Filter> sameSiteCookieFilter() {
+    FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 
-            if (response instanceof HttpServletResponse) {
-                HttpServletResponse res = (HttpServletResponse) response;
-                Collection<String> headers = res.getHeaders(HttpHeaders.SET_COOKIE);
-                boolean firstHeader = true;
-                for (String header : headers) {
-                    if (header.contains("JSESSIONID")) {
-                        String updatedHeader = header + "; SameSite=None; Secure";
-                        if (firstHeader) {
-                            res.setHeader(HttpHeaders.SET_COOKIE, updatedHeader);
-                            firstHeader = false;
-                        } else {
-                            res.addHeader(HttpHeaders.SET_COOKIE, updatedHeader);
-                        }
-                    }
-                }
+    registrationBean.setFilter((request, response, chain) -> {
+      jakarta.servlet.http.HttpServletResponse httpResponse = (jakarta.servlet.http.HttpServletResponse) response;
+
+      chain.doFilter(request, httpResponse);
+
+      // Capturar y modificar todas las cookies después del filtrado
+      Collection<String> headers = httpResponse.getHeaders("Set-Cookie");
+      if (!headers.isEmpty()) {
+        // fundamental limpiar las cabeceras de los set-cookie existentes
+        httpResponse.setHeader("Set-Cookie", null);
+
+        // Agregar las cabeceras modificadas
+        for (String header : headers) {
+          // Si la cookie ya contiene SameSite=None, no la modificamos amikos
+          if (!header.contains("SameSite=None")) {
+            if (header.contains("JSESSIONID")) {
+              String newHeader = header;
+              if (!newHeader.contains("Secure")) {
+                newHeader += "; Secure";
+              }
+              newHeader += "; SameSite=None";
+              httpResponse.addHeader("Set-Cookie", newHeader);
+            } else {
+              // Para otras cookies, mantenemos el encabezado original
+              httpResponse.addHeader("Set-Cookie", header);
             }
-        });
+          } else {
+            // mantenemos la cookie que ya tiene SameSite=None
+            httpResponse.addHeader("Set-Cookie", header);
+          }
+        }
+      }
+    });
 
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Justo después del CORS
-        return registrationBean;
-    }
+    registrationBean.addUrlPatterns("/*");
+    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Justo después del CORS
+    return registrationBean;
+  }
 
 }
