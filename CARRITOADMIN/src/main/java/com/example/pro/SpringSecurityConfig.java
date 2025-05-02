@@ -134,7 +134,7 @@ public class SpringSecurityConfig {
 	return corsbean;
     }
 
-  @Bean
+  /*@Bean
   public FilterRegistrationBean<Filter> sameSiteCookieFilter() {
     FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 
@@ -185,6 +185,70 @@ public class SpringSecurityConfig {
     registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return registrationBean;
   }
+  */
+  @Bean
+  public FilterRegistrationBean<Filter> sameSiteCookieFilter() {
+    FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 
-  
+    registrationBean.setFilter((request, response, chain) -> {
+      jakarta.servlet.http.HttpServletResponse httpResponse = (jakarta.servlet.http.HttpServletResponse) response;
+      jakarta.servlet.http.HttpServletRequest httpRequest = (jakarta.servlet.http.HttpServletRequest) request;
+
+      // Crear una respuesta personalizada para capturar y modificar las cookies
+      jakarta.servlet.http.HttpServletResponseWrapper wrappedResponse =
+        new jakarta.servlet.http.HttpServletResponseWrapper(httpResponse) {
+          @Override
+          public void addHeader(String name, String value) {
+            // Solo interceptamos los headers Set-Cookie
+            if (name.equalsIgnoreCase("Set-Cookie")) {
+              // Solo modificamos las cookies de sesión
+              if (value.contains("JSESSIONID")) {
+                // Aseguramos que tenga SameSite=None y Secure
+                if (!value.contains("SameSite=None")) {
+                  StringBuilder modifiedCookie = new StringBuilder(value);
+                  if (!value.contains("Secure")) {
+                    modifiedCookie.append("; Secure");
+                  }
+                  modifiedCookie.append("; SameSite=None");
+                  value = modifiedCookie.toString();
+                  System.out.println("[FIXED] Cookie modificada: " + value);
+                }
+              }
+            }
+            // Añadimos el header (original o modificado)
+            super.addHeader(name, value);
+          }
+
+          @Override
+          public void setHeader(String name, String value) {
+            // Similar al método addHeader
+            if (name.equalsIgnoreCase("Set-Cookie") && value != null && value.contains("JSESSIONID")) {
+              if (!value.contains("SameSite=None")) {
+                StringBuilder modifiedCookie = new StringBuilder(value);
+                if (!value.contains("Secure")) {
+                  modifiedCookie.append("; Secure");
+                }
+                modifiedCookie.append("; SameSite=None");
+                value = modifiedCookie.toString();
+                System.out.println("[FIXED] Cookie modificada via setHeader: " + value);
+              }
+            }
+            super.setHeader(name, value);
+          }
+        };
+
+      // Log de diagnóstico
+      System.out.println("Procesando URL: " + httpRequest.getRequestURL());
+
+      // Procesar la solicitud con nuestra respuesta wrapper
+      chain.doFilter(request, wrappedResponse);
+
+      // Logs después del procesamiento
+      System.out.println("Respuesta procesada para: " + httpRequest.getRequestURL());
+    });
+
+    registrationBean.addUrlPatterns("/*");
+    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return registrationBean;
+  }
 }
