@@ -26,6 +26,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.example.pro.jwt.filter.JwtAuthenticationFilter;
+import com.example.pro.jwt.filter.JwtValidationFilter;
 import com.example.pro.services.IUsuarioServices;
 import com.example.pro.services.Impl.UsuarioServices;
 import com.google.common.net.HttpHeaders;
@@ -78,7 +80,7 @@ public class SpringSecurityConfig {
 	System.err.println(passwordEncoder().encode("admin"));
 	return http.authorizeHttpRequests((authz) -> authz
 		// TODOS LOS USUARIOS
-		.requestMatchers("/", "/login", "/Producto/list", "/swagger-ui/**", "/pago", "/Cliente/add", "/webhook")
+		.requestMatchers("/","/dialogflow", "/login", "/Producto/list", "/swagger-ui/**", "/pago", "/Cliente/add", "/webhook")
 		.permitAll().requestMatchers(HttpMethod.POST, "/pago/crear-preferencia").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")
@@ -87,12 +89,14 @@ public class SpringSecurityConfig {
 		.requestMatchers(HttpMethod.POST, "/Venta/**").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.PUT, "/Venta/**").hasAnyRole("CLIENTE").anyRequest().authenticated())
 		.cors(cors -> cors.configurationSource(configurationSource()))
-		
+//		.addFilter(new JwtAuthenticationFilter(authenticationManager(http)))
+//		.addFilter(new JwtValidationFilter(authenticationManager(http)))
 		// Cambiamos la política de sesión a IF_REQUIRED para mayor compatibilidad
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 			// Configurando el cookie de sesión explícitamente
 			.sessionFixation().migrateSession())
-		.csrf(csrf -> csrf.disable()).logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true)
+		.csrf(csrf -> csrf.disable())
+		.logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID").logoutSuccessHandler((request, response, authentication) -> {
 			    response.setStatus(HttpServletResponse.SC_OK);
 			    response.getWriter().write("Sesión cerrada con éxito");
@@ -104,10 +108,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource configurationSource() {
 	CorsConfiguration config = new CorsConfiguration();
 	config.setAllowedOrigins(Arrays.asList("https://proyectocarritoantonitrejo.netlify.app",
-		"http://localhost:3001", "http://localhost:3000",
-		// prueba con dominios de mercado pago aiudaaaaa
-		"https://www.mercadopago.com", "https://www.mercadopago.com.pe", "https://api.mercadopago.com",
-		"https://api.mercadolibre.com"));
+		"http://localhost:3001", "http://localhost:3000"));
 	config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
 	config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin",
 		"Access-Control-Request-Method", "Access-Control-Request-Headers"));

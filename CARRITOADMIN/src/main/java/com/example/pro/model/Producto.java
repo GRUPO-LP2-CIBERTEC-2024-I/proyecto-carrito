@@ -5,7 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import lombok.Data;
+@Data
 @Entity
 public class Producto {
     @Id
@@ -31,64 +32,13 @@ public class Producto {
 
     public Producto() {
 	super();
-    }
+    }     
     
-    
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public int getIdProducto() {
-	return IdProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-	IdProducto = idProducto;
-    }
-
-    public String getDescripcion() {
-	return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-	this.descripcion = descripcion;
-    }
-
-    public double getPrecioUnidad() {
-	return PrecioUnidad;
-    }
-
-    public void setPrecioUnidad(double precioUnidad) {
-	PrecioUnidad = precioUnidad;
-    }
-
-    public int getStock() {
-	return Stock;
-    }
-
-    public void setStock(int stock) {
-	Stock = stock;
-    }
-
-    public String getImagen() {
-	return Imagen;
-    }
-
-    public void setImagen(String imagen) {
-	Imagen = imagen;
-    }
-
-    public String getEstado() {
-	return Estado;
-    }
-
-    public void setEstado(String estado) {
-	Estado = estado;
-    }
+    public String getInfoWhatsapp() {
+	return String.format(
+	            "descripcion='%s'\n PrecioUnidad=%.2f \n" +
+	            "Stock=%d \n categoria='%s' \n\n",
+	             descripcion, PrecioUnidad, 
+	            Stock, categoria);    }
 
 }

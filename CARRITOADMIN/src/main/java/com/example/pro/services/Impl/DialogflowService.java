@@ -60,7 +60,7 @@ public class DialogflowService implements IDialogflowService {
     @Override
     public void sendDialogFlow(String telefono, String nombre, String mensaje) {
 	if (telefono != null && nombre != null && mensaje != null) {
-	    String responseDialog = detectIntent(nombre, "es");
+	    String responseDialog = detectIntent(mensaje, "es");
 	    if (!responseDialog.equals("Error con Dialogflow")) {
 		requestMessage obj = new requestMessage();
 		Text text = new Text();

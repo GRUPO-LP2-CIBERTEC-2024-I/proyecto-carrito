@@ -37,8 +37,8 @@ public class ProductoServices implements IProductoServices {
     }
 
     @Override
-    public Producto FindProductoByNombre(String nombre) {
-	return null;
+    public Optional<Producto> FindProductoByNombre(String nombre) {
+	return _productoRepository.findByDescripcion(nombre);
     }
 
     @Override
