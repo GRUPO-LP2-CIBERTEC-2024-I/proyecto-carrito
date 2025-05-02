@@ -34,6 +34,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -85,6 +87,7 @@ public class SpringSecurityConfig {
 		.requestMatchers(HttpMethod.POST, "/Venta/**").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.PUT, "/Venta/**").hasAnyRole("CLIENTE").anyRequest().authenticated())
 		.cors(cors -> cors.configurationSource(configurationSource()))
+		
 		// Cambiamos la política de sesión a IF_REQUIRED para mayor compatibilidad
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 			// Configurando el cookie de sesión explícitamente
@@ -132,27 +135,26 @@ public class SpringSecurityConfig {
     public FilterRegistrationBean<Filter> sameSiteCookieFilter() {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
 
-        registrationBean.setFilter(new Filter() {
-            @Override
-            public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-                    throws IOException, ServletException {
-                HttpServletRequest httpRequest = (HttpServletRequest) request;
-                HttpServletResponse httpResponse = (HttpServletResponse) response;
+        registrationBean.setFilter((ServletRequest request, ServletResponse response, FilterChain chain) -> {
+            chain.doFilter(request, response);
 
-                chain.doFilter(request, response);
+            if (response instanceof HttpServletResponse) {
+                HttpServletResponse res = (HttpServletResponse) response;
+                Collection<String> headers = res.getHeaders("Set-Cookie");
+                List<String> modifiedHeaders = headers.stream()
+                    .map(header -> header + "; SameSite=None; Secure")
+                    .collect(Collectors.toList());
 
-                HttpSession session = httpRequest.getSession(false);
-                if (session != null && !httpResponse.isCommitted()) {
-                    String sessionId = session.getId();
-                    httpResponse.setHeader("Set-Cookie",
-                        "JSESSIONID=" + sessionId + "; Path=/; Secure; HttpOnly; SameSite=None");
+                res.setHeader("Set-Cookie", null);
+                for (String header : modifiedHeaders) {
+                    res.addHeader("Set-Cookie", header);
                 }
             }
         });
 
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registrationBean;
     }
+
 
 }
