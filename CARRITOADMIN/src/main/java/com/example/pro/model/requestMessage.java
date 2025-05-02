@@ -19,4 +19,16 @@ public class requestMessage {
     private String to;
     private String type;
     private Text text;
+    private ImageMessage image;
+    
+    public requestMessage(String to, String type, ImageMessage image) {
+	super();
+	this.to = to;
+	this.type = type;
+	this.image = image;
+	messaging_product = "whatsapp";
+	recipient_type = "individual";
+    }
+    
+    
 }

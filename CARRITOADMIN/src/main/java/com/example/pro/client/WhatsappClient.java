@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
 
 import com.example.pro.model.requestMessage;
 
@@ -21,7 +21,7 @@ public interface WhatsappClient {
 	    @RequestBody requestMessage msg);
 
     @PostMapping(value = "/media", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    Map<String, Object> uploadMedia(@RequestPart("file") MultipartFile file,
+    Map<String, Object> uploadMedia(@RequestPart("file") Resource file,
 	    @RequestPart("messaging_product") String messagingProduct,
 	    @RequestHeader("Authorization") String authorization);
 
