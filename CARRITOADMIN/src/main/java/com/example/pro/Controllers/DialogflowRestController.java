@@ -27,20 +27,22 @@ public class DialogflowRestController {
 	Map<String, Object> queryResult = (Map<String, Object>) request.get("queryResult");
 	String intentName = (String) ((Map<String, Object>) queryResult.get("intent")).get("displayName");
 	Map<String, Object> parameters = (Map<String, Object>) queryResult.get("parameters");
-	System.out.println("request: "+request.toString());
+	System.out.println("request: " + request.toString());
 	String nombreProducto = parameters.get("producto").toString();
 	String fulfillmentText;
 	fulfillmentText = "";
 
 	// Lógica según el intent
-	if ("ConsultarProducto".equals(intentName)) {
+	if ("ConsultarProducto".equals(intentName) && !nombreProducto.isBlank() && nombreProducto != null) {
 	    List<Producto> proOp = _IProductoServices.findByDescripcionContainingIgnoreCase(nombreProducto);
 	    if (!proOp.isEmpty()) {
-		for(Producto pro : proOp)
-		fulfillmentText += pro.getInfoWhatsapp()+"\n";		
-	    }else {
-		fulfillmentText = "no entendí, puedes repetirlo";
+		for (Producto pro : proOp)
+		    fulfillmentText += pro.getInfoWhatsapp();
+		fulfillmentText += "¿cual de estos productos te interesa?";
+		
 	    }
+	} else {
+	    fulfillmentText = "no entendí, puedes repetirlo";
 	}
 
 	// Crear respuesta

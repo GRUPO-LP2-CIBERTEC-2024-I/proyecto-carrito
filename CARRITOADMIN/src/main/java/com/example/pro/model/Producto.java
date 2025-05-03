@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+
 @Data
 @Entity
 public class Producto {
@@ -32,13 +33,10 @@ public class Producto {
 
     public Producto() {
 	super();
-    }     
-    
+    }
+
     public String getInfoWhatsapp() {
-	return String.format(
-	            "descripcion='%s'\n PrecioUnidad=%.2f \n" +
-	            "Stock=%d \n categoria='%s' \n\n",
-	             descripcion, PrecioUnidad, 
-	            Stock, categoria);    }
+	return String.format("%s \n S./ %.2f \n" + "\n\n", descripcion, PrecioUnidad);
+    }
 
 }

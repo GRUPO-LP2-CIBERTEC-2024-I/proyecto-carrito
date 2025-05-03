@@ -54,7 +54,7 @@ public class PaymentController {
     @Autowired
     private IUsuarioServices _IUsuarioServices;
 
-    /*@PostMapping("/crear-preferencia")
+    @PostMapping("/crear-preferencia")
     public ResponseEntity<?> crearPreferencia(@RequestBody VentaAndDetalles venta) {
 	try {
 	    Preference preference = new Preference();
@@ -92,67 +92,67 @@ public class PaymentController {
 	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la preferencia");
 	}
     }
-    */
+    
 
-  @PostMapping("/crear-preferencia")
-  public ResponseEntity<?> crearPreferencia(@RequestBody VentaAndDetalles venta,
-                                            HttpServletRequest request,
-                                            HttpServletResponse response) {
-    try {
-      // Aseguramos que la sesión existe
-      request.getSession(true);
-
-      Preference preference = new Preference();
-      PaymentMethods payMethods = new PaymentMethods();
-      payMethods.setInstallments(1);
-      preference.setPaymentMethods(payMethods);
-      VentaDTO ventadto = venta.getVentaDTO();
-      ventadto.setCli(_IUsuarioServices.getUsuarioActual().getCorreo());
-      venta.setVentaDTO(ventadto);
-      venta.getDetallesDTO().forEach(detalle -> {
-        Producto pro = iProductoServices.getById(detalle.getProducto());
-        Item item = new Item();
-        item.setTitle(detalle.getNomProd()).setQuantity(detalle.getCant())
-          .setUnitPrice(Float.parseFloat(pro.getPrecioUnidad() + ""));
-        preference.appendItem(item);
-      });
-      Gson gsson = new Gson();
-      JsonObject metadata = gsson.toJsonTree(venta).getAsJsonObject();
-      preference.setMetadata(metadata);
-
-      BackUrls backUrls = new BackUrls();
-      backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
-        .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
-        .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
-
-      preference.setBackUrls(backUrls);
-      preference.setAutoReturn(Preference.AutoReturn.approved);
-
-      // Añadimos el ID de sesión a los metadatos para mejor seguimiento
-      if (metadata.get("sessionId") == null) {
-        metadata.addProperty("sessionId", request.getSession().getId());
-      }
-
-      Preference savedPreference = preference.save();
-      System.err.println("metadata: " + savedPreference.getMetadata());
-
-      // Aseguramos que la cookie de sesión se envíe con las directivas correctas
-      String sessionId = request.getSession().getId();
-      Cookie sessionCookie = new Cookie("JSESSIONID", sessionId);
-      sessionCookie.setPath("/");
-      sessionCookie.setSecure(true);
-      sessionCookie.setHttpOnly(true);
-      sessionCookie.setAttribute("SameSite", "None");
-      response.addCookie(sessionCookie);
-
-      return ResponseEntity
-        .ok(Map.of("id", savedPreference.getId(), "init_point", savedPreference.getInitPoint()));
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la preferencia: " + e.getMessage());
-    }
-  }
+//  @PostMapping("/crear-preferencia")
+//  public ResponseEntity<?> crearPreferencia(@RequestBody VentaAndDetalles venta,
+//                                            HttpServletRequest request,
+//                                            HttpServletResponse response) {
+//    try {
+//      // Aseguramos que la sesión existe
+//      request.getSession(true);
+//
+//      Preference preference = new Preference();
+//      PaymentMethods payMethods = new PaymentMethods();
+//      payMethods.setInstallments(1);
+//      preference.setPaymentMethods(payMethods);
+//      VentaDTO ventadto = venta.getVentaDTO();
+//      ventadto.setCli(_IUsuarioServices.getUsuarioActual().getCorreo());
+//      venta.setVentaDTO(ventadto);
+//      venta.getDetallesDTO().forEach(detalle -> {
+//        Producto pro = iProductoServices.getById(detalle.getProducto());
+//        Item item = new Item();
+//        item.setTitle(detalle.getNomProd()).setQuantity(detalle.getCant())
+//          .setUnitPrice(Float.parseFloat(pro.getPrecioUnidad() + ""));
+//        preference.appendItem(item);
+//      });
+//      Gson gsson = new Gson();
+//      JsonObject metadata = gsson.toJsonTree(venta).getAsJsonObject();
+//      preference.setMetadata(metadata);
+//
+//      BackUrls backUrls = new BackUrls();
+//      backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
+//        .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
+//        .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
+//
+//      preference.setBackUrls(backUrls);
+//      preference.setAutoReturn(Preference.AutoReturn.approved);
+//
+//      // Añadimos el ID de sesión a los metadatos para mejor seguimiento
+//      if (metadata.get("sessionId") == null) {
+//        metadata.addProperty("sessionId", request.getSession().getId());
+//      }
+//
+//      Preference savedPreference = preference.save();
+//      System.err.println("metadata: " + savedPreference.getMetadata());
+//
+//      // Aseguramos que la cookie de sesión se envíe con las directivas correctas
+//      String sessionId = request.getSession().getId();
+//      Cookie sessionCookie = new Cookie("JSESSIONID", sessionId);
+//      sessionCookie.setPath("/");
+//      sessionCookie.setSecure(true);
+//      sessionCookie.setHttpOnly(true);
+//      sessionCookie.setAttribute("SameSite", "None");
+//      response.addCookie(sessionCookie);
+//
+//      return ResponseEntity
+//        .ok(Map.of("id", savedPreference.getId(), "init_point", savedPreference.getInitPoint()));
+//
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la preferencia: " + e.getMessage());
+//    }
+//  }
     @PostMapping
     public ResponseEntity<String> recibirWebhook(@RequestParam("id") Long paymentId,
 	    @RequestParam("topic") String topic) {
@@ -177,7 +177,7 @@ public class PaymentController {
 
 	    } catch (Exception e) {
 		e.printStackTrace();
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar webhook");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar notificacion de Mercado Pago");
 	    }
 	}
 
