@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.mercadopago.MercadoPago;
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.example.pro.client")
 @SpringBootApplication
 public class CarritoadminApplication implements CommandLineRunner {
     	@Value("${MP_ACCESS_TOKEN}")

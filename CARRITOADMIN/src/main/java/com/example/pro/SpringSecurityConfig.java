@@ -8,6 +8,7 @@ import java.util.Collection;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.session.DefaultCookieSerializerCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -156,6 +157,19 @@ public class SpringSecurityConfig {
         registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registrationBean;
     }
+    
+    
+    @Bean
+    public DefaultCookieSerializerCustomizer cookieSerializerCustomizer() {
+        return (serializer) -> {
+            serializer.setSameSite("None");
+            serializer.setUseSecureCookie(true);
+            serializer.setUseHttpOnlyCookie(true); // opcional, pero recomendado
+            serializer.setCookiePath("/"); // opcional
+        };
+    }
+
+    
 
 
 }

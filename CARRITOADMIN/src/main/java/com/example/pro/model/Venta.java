@@ -116,5 +116,9 @@ public class Venta {
     public void setDetalles(List<Detalle> detalles) {
         this.detalles = detalles;
     }
+    
+    public String getCorrelativo() {
+	return String.format("%010d", this.IdVenta);
+    }
 
 }

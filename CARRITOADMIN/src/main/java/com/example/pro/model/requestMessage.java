@@ -21,11 +21,12 @@ public class requestMessage {
     private Text text;
     private ImageMessage image;
     
-    public requestMessage(String to, String type, ImageMessage image) {
+    public requestMessage(String to, String type, ImageMessage image,Text text) {
 	super();
 	this.to = to;
 	this.type = type;
 	this.image = image;
+	this.text = text;
 	messaging_product = "whatsapp";
 	recipient_type = "individual";
     }

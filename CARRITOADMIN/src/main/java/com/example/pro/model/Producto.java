@@ -36,7 +36,7 @@ public class Producto {
     }
 
     public String getInfoWhatsapp() {
-	return String.format("%s \n S./ %.2f \n" + "\n\n", descripcion, PrecioUnidad);
+	return String.format("%s \n S./ %.2f \n\n", descripcion, PrecioUnidad);
     }
 
 }

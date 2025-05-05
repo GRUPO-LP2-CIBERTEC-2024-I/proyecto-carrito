@@ -3,6 +3,7 @@ package com.example.pro.services.Impl;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,15 +30,17 @@ public class ReporteService implements IReporteServices {
     @Override
     public byte[] generarBoleta(Venta ventaSaved) throws JRException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
+	InputStream logo = this.getClass().getResourceAsStream("/static/logo.jpeg");
 	JRBeanCollectionDataSource detalle = new JRBeanCollectionDataSource((Collection<?>) ventaSaved.getDetalles());
 	Cliente cli = ventaSaved.getCli();
 	Map<String, Object> params = new HashMap<>(mapper.convertValue(ventaSaved, Map.class));
 	params.put("detalle", detalle);
+	params.put("logo", logo);
 	params.put("nombre", cli.getNombres());
 	params.put("apellidos", cli.getApellidos());
 	params.put("telefono", cli.getTelefono());
 	params.put("dni", cli.getDni());
-	JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getResourceAsStream("/reports/boleta.jasper"),
+	JasperPrint jasperPrint = JasperFillManager.fillReport(this.getClass().getResourceAsStream("/reports/boleta.jasper"),
 		params, new JREmptyDataSource());
 
 	BufferedImage image = (BufferedImage) JasperPrintManager.printPageToImage(jasperPrint, 0, 1.6f);

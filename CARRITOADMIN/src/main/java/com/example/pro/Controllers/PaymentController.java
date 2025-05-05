@@ -76,9 +76,13 @@ public class PaymentController {
 	    preference.setMetadata(metadata);
 
 	    BackUrls backUrls = new BackUrls();
-	    backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
-		    .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
-		    .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
+	    backUrls.setSuccess("http://localhost:3000/verMisPedidos")
+		    .setFailure("http://localhost:3000/comprar")
+		    .setPending("http://localhost:3000/verMisPedidos");
+//	    BackUrls backUrls = new BackUrls();
+//	    backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
+//	    .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
+//	    .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
 
 	    preference.setBackUrls(backUrls);
 	    preference.setAutoReturn(Preference.AutoReturn.approved);
@@ -163,11 +167,11 @@ public class PaymentController {
 		System.out.println("estado del pago:" + payment.getStatusDetail());
 		String statusPayment = payment.getStatus().name().toString();
 		switch (statusPayment.toLowerCase()) {
-		case "approved": {
+		case "refunded": {
 		    iPaymentService.generarVentaConMercadoPago(payment);
 		    break;
 		}
-		case "refunded": {
+		case "approved": {
 		    iPaymentService.cancelarVenta(payment);
 		    break;
 		}
@@ -177,7 +181,7 @@ public class PaymentController {
 
 	    } catch (Exception e) {
 		e.printStackTrace();
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar notificacion de Mercado Pago");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar notificacion de Mercado ago");
 	    }
 	}
 
