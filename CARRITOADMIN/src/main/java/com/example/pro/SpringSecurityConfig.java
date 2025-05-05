@@ -109,7 +109,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource configurationSource() {
 	CorsConfiguration config = new CorsConfiguration();
 	config.setAllowedOrigins(Arrays.asList("https://proyectocarritoantonitrejo.netlify.app",
-		"http://localhost:3001", "http://localhost:3000"));
+		"http://localhost:3001", "http://localhost:3000","https://proyecto-carrito-front.onrender.com"));
 	config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
 	config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin",
 		"Access-Control-Request-Method", "Access-Control-Request-Headers"));
