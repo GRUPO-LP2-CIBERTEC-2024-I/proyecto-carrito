@@ -77,4 +77,9 @@ public class ClienteServices implements IClienteServices {
     public Cliente getByDni(String dni) {
 	return _clienteRepository.findByDni(dni).orElseThrow();
     }
+
+    @Override
+    public Optional<Cliente> verificarCorreo(String correo) {
+	return _clienteRepository.findbyCorreo(correo);
+    }
 }

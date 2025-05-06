@@ -2,8 +2,10 @@ package com.example.pro.Controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,14 +41,27 @@ public class ClienteRestController {
 	public ResponseEntity<?> postAddCli(@RequestBody Cliente entity) {
 	    try {		
 		return ResponseEntity.ok(clienteServices.SaveCliente(entity));
-	    } catch (Exception e) {
+	    }catch (DuplicateKeyException e) {
+		e.printStackTrace();
+		return ResponseEntity.internalServerError().body("ya exíste el usuario "+ entity.getCorreo());
+	    }
+	    catch (Exception e) {
 		e.printStackTrace();
 		return ResponseEntity.internalServerError().body("error del servidor");
 	    }
 	}
+	
 	@PutMapping("/{id}")
 	public int putMethodName(@PathVariable int id, @RequestBody Cliente entity) {
 		return clienteServices.updateCliente(id, entity);
+	}
+	@PostMapping("/verificar-correo")
+	public ResponseEntity<String> verificarCorreo(@RequestParam String correo) {	
+	     Optional<Cliente> cliOp = clienteServices.verificarCorreo(correo);
+	     cliOp.map(cli ->{
+		 return ResponseEntity.ok("ya existe el usuario" + cli.getCorreo());
+	     });
+	     return ResponseEntity.ok("verificado");
 	}
 	@PostMapping("/verificar")
 	public Cliente verificar(@RequestBody Map<String, String> request) {
