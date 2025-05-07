@@ -80,7 +80,7 @@ public class SpringSecurityConfig {
     @Bean
     @Order(1)
     public SecurityFilterChain webhookFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/dialogflow") // <-- solo aplica a esta ruta
+        http.securityMatcher("/dialogflow", "/webhook") // <-- solo aplica a esta ruta
             .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -94,7 +94,7 @@ public class SpringSecurityConfig {
 	System.err.println(passwordEncoder().encode("admin"));
 	return http.authorizeHttpRequests((authz) -> authz
 		// TODOS LOS USUARIOS
-		.requestMatchers("/", "/login", "/Producto/list", "/swagger-ui/**", "/pago", "/Cliente/add", "/Cliente/verificar-correo", "/webhook")
+		.requestMatchers("/", "/login", "/Producto/list", "/swagger-ui/**", "/pago", "/Cliente/add", "/Cliente/verificar-correo")
 		.permitAll().requestMatchers(HttpMethod.POST, "/pago/crear-preferencia").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")
