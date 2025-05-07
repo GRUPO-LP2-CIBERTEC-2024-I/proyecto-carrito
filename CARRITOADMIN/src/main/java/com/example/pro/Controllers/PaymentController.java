@@ -172,11 +172,11 @@ public class PaymentController {
 		System.out.println("estado del pago:" + payment.getStatusDetail());
 		String statusPayment = payment.getStatus().name().toString();
 		switch (statusPayment.toLowerCase()) {
-		case "refunded": {
+		case "approved": {
 		    iPaymentService.generarVentaConMercadoPago(payment);
 		    break;
 		}
-		case "approved": {
+		case "refunded": {
 		    iPaymentService.cancelarVenta(payment);
 		    break;
 		}
