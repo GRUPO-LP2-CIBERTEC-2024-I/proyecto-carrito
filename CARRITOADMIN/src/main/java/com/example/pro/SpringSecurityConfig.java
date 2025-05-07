@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -75,13 +76,25 @@ public class SpringSecurityConfig {
 	authBuilder.userDetailsService(usuarioServices).passwordEncoder(passwordEncoder());
 	return authBuilder.build();
     }
+    
+    @Bean
+    @Order(1)
+    public SecurityFilterChain webhookFilterChain(HttpSecurity http) throws Exception {
+        http.securityMatcher("/dialogflow") // <-- solo aplica a esta ruta
+            .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();
+    }
+
 
     @Bean
+    @Order(2)
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	System.err.println(passwordEncoder().encode("admin"));
 	return http.authorizeHttpRequests((authz) -> authz
 		// TODOS LOS USUARIOS
-		.requestMatchers("/","/dialogflow", "/login", "/Producto/list", "/swagger-ui/**", "/pago", "/Cliente/add", "/Cliente/verificar-correo", "/webhook")
+		.requestMatchers("/", "/login", "/Producto/list", "/swagger-ui/**", "/pago", "/Cliente/add", "/Cliente/verificar-correo", "/webhook")
 		.permitAll().requestMatchers(HttpMethod.POST, "/pago/crear-preferencia").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.GET, "/Cliente/**").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.POST, "/Cliente/**").hasAnyRole("CLIENTE")

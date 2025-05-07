@@ -76,14 +76,14 @@ public class PaymentService implements IPaymentService {
 	} else {
 	    ventaSaved = iVentaServices.findByPago(pagoOp.get());
 	}
-	//enviando notificacion de pago
-	String mensaje = String.format("tu pago %s de S./ %.2f fue aprobado", pago.getPaymentId(), monto);
 	String tel = ventaSaved.getCli().getTelefono();
-	_IWhatsappServices.sendMessage(mensaje, tel);
 	// enviando comprobante de pago
 	byte[] imageBytes = _IReporteServices.generarBoleta(ventaSaved);
 	log.info("Tamaño del byte[] generado: {}", imageBytes.length);
 	_IWhatsappServices.sendImage(imageBytes, tel);
+	//enviando notificacion de pago
+	String mensaje = String.format("💸 tu pago %s de S./ %.2f fue aprobado.\n 👍😊 ¡Gracias por su compra! 👍😊 ", pago.getPaymentId(), monto);
+	_IWhatsappServices.sendMessage(mensaje, tel);
 	
     }
 
@@ -98,7 +98,7 @@ public class PaymentService implements IPaymentService {
 	Venta ventaSaved = iVentaServices.SaveVenta(venta);
 	log.info("cancelando la venta: " + ventaSaved.getIdVenta() + "con el pago: " + pago.getId());
 	// enviando mensaje de cancelacion de pago
-	String mensaje = (String.format("tu pago %s de S./ %.2f fue devuelto", payment.getId(), venta.getMonto()));
+	String mensaje = (String.format("🚨🚫 tu pago %s de S./ %.2f fue devuelto", payment.getId(), venta.getMonto()));
 	String tel= ventaSaved.getCli().getTelefono();
 	_IWhatsappServices.sendMessage(mensaje, tel);
     }

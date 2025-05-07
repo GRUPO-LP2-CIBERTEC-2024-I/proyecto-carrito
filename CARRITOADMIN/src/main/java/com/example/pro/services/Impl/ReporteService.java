@@ -30,7 +30,7 @@ public class ReporteService implements IReporteServices {
     @Override
     public byte[] generarBoleta(Venta ventaSaved) throws JRException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
-	InputStream logo = this.getClass().getResourceAsStream("/static/logo.jpeg");
+	InputStream logo = this.getClass().getResourceAsStream("/static/img/logo.jpeg");
 	JRBeanCollectionDataSource detalle = new JRBeanCollectionDataSource((Collection<?>) ventaSaved.getDetalles());
 	Cliente cli = ventaSaved.getCli();
 	Map<String, Object> params = new HashMap<>(mapper.convertValue(ventaSaved, Map.class));
