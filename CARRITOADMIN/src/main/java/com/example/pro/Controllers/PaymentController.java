@@ -67,34 +67,39 @@ public class PaymentController {
 	    venta.getDetallesDTO().forEach(detalle -> {
 		Producto pro = iProductoServices.getById(detalle.getProducto());
 		Item item = new Item();
-		item.setTitle(detalle.getNomProd()).setQuantity(detalle.getCant())
+		item.setTitle(pro.getDescripcion())
+		.setPictureUrl(pro.getImagen())
+		.setQuantity(detalle.getCant())
 			.setUnitPrice(Float.parseFloat(pro.getPrecioUnidad() + ""));
-		preference.appendItem(item);
+		preference.appendItem(item);		
 	    });
 	    Gson gsson = new Gson();
 	    JsonObject metadata = gsson.toJsonTree(venta).getAsJsonObject();
 	    preference.setMetadata(metadata);
-
-	    BackUrls backUrls = new BackUrls();
-	    backUrls.setSuccess("http://localhost:3000/verMisPedidos")
-		    .setFailure("http://localhost:3000/comprar")
-		    .setPending("http://localhost:3000/verMisPedidos");
+	    
 //	    BackUrls backUrls = new BackUrls();
-//	    backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
-//	    .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
-//	    .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
+//	    backUrls.setSuccess("http://localhost:3000/verMisPedidos")
+//		    .setFailure("http://localhost:3000/comprar")
+//		    .setPending("http://localhost:3000/verMisPedidos");
+	    BackUrls backUrls = new BackUrls();
+	    backUrls.setSuccess("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos")
+	    .setFailure("https://proyectocarritoantonitrejo.netlify.app/comprar")
+	    .setPending("https://proyectocarritoantonitrejo.netlify.app/verMisPedidos");
 
 	    preference.setBackUrls(backUrls);
 	    preference.setAutoReturn(Preference.AutoReturn.approved);
 
+
 	    Preference savedPreference = preference.save();
-	    System.err.println("metadata: " + savedPreference.getMetadata());
+
 	    return ResponseEntity
 		    .ok(Map.of("id", savedPreference.getId(), "init_point", savedPreference.getInitPoint()));
 
 	} catch (Exception e) {
+	    e.printStackTrace();
 	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la preferencia");
 	}
+	
     }
     
 

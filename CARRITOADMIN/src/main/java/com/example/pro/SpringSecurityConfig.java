@@ -90,18 +90,18 @@ public class SpringSecurityConfig {
 		.requestMatchers(HttpMethod.POST, "/Venta/**").hasAnyRole("CLIENTE")
 		.requestMatchers(HttpMethod.PUT, "/Venta/**").hasAnyRole("CLIENTE").anyRequest().authenticated())
 		.cors(cors -> cors.configurationSource(configurationSource()))
-//		.addFilter(new JwtAuthenticationFilter(authenticationManager(http)))
-//		.addFilter(new JwtValidationFilter(authenticationManager(http)))
+		.addFilter(new JwtAuthenticationFilter(authenticationManager(http)))
+		.addFilter(new JwtValidationFilter(authenticationManager(http)))
 		// Cambiamos la política de sesión a IF_REQUIRED para mayor compatibilidad
-		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			// Configurando el cookie de sesión explícitamente
 			.sessionFixation().migrateSession())
 		.csrf(csrf -> csrf.disable())
-		.logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true)
-			.deleteCookies("JSESSIONID").logoutSuccessHandler((request, response, authentication) -> {
-			    response.setStatus(HttpServletResponse.SC_OK);
-			    response.getWriter().write("Sesión cerrada con éxito");
-			}))
+//		.logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true)
+//			.deleteCookies("JSESSIONID").logoutSuccessHandler((request, response, authentication) -> {
+//			    response.setStatus(HttpServletResponse.SC_OK);
+//			    response.getWriter().write("Sesión cerrada con éxito");
+//			}))
 		.build();
     }
 
