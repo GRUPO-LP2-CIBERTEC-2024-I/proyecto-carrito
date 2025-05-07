@@ -38,8 +38,9 @@ public class DialogflowRestController {
 	    if (!proOp.isEmpty()) {
 		for (Producto pro : proOp)
 		    fulfillmentText += pro.getInfoWhatsapp();
-		fulfillmentText += "¿cual de estos productos te interesa?";
-		
+		fulfillmentText += "hecha un vistaso a nuestro catalogo de productos: "
+			+ "https://proyectocarritoantonitrejo.netlify.app/productos";
+
 	    }
 	} else {
 	    fulfillmentText = "no entendí, puedes repetirlo";

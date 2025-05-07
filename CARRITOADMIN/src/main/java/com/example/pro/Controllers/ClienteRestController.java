@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,9 +43,9 @@ public class ClienteRestController {
 	public ResponseEntity<?> postAddCli(@RequestBody Cliente entity) {
 	    try {		
 		return ResponseEntity.ok(clienteServices.SaveCliente(entity));
-	    }catch (DuplicateKeyException e) {
+	    }catch (DataIntegrityViolationException e) {
 		e.printStackTrace();
-		return ResponseEntity.internalServerError().body("ya exíste el usuario "+ entity.getCorreo());
+		return ResponseEntity.internalServerError().body(Map.of("error","ya exíste el usuario "+ entity.getCorreo()));
 	    }
 	    catch (Exception e) {
 		e.printStackTrace();
@@ -56,12 +58,12 @@ public class ClienteRestController {
 		return clienteServices.updateCliente(id, entity);
 	}
 	@PostMapping("/verificar-correo")
-	public ResponseEntity<String> verificarCorreo(@RequestParam String correo) {	
+	public ResponseEntity<?> verificarCorreo(@RequestParam String correo) {	
 	     Optional<Cliente> cliOp = clienteServices.verificarCorreo(correo);
-	     cliOp.map(cli ->{
-		 return ResponseEntity.ok("ya existe el usuario" + cli.getCorreo());
-	     });
-	     return ResponseEntity.ok("verificado");
+	      return cliOp.map(cli ->{
+		return  ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error","ya existe el usuario con ese correo"));
+	     }).orElse(ResponseEntity.ok(Map.of("message","verificado")));
+	     
 	}
 	@PostMapping("/verificar")
 	public Cliente verificar(@RequestBody Map<String, String> request) {
