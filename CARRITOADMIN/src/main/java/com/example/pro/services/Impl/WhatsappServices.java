@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.pro.DTO.metaDTOs.Text;
@@ -16,6 +17,7 @@ import com.example.pro.utils.ByteArrayMultipartFile;
 
 import feign.FeignException;
 
+@Service
 public class WhatsappServices implements IWhatsappServices {
     private Logger log = LoggerFactory.getLogger(PaymentService.class);
 
@@ -46,7 +48,6 @@ public class WhatsappServices implements IWhatsappServices {
 
 	    MultipartFile multipartFile = new ByteArrayMultipartFile(img, "file", "comprobante.jpg",
 		    "image/jpeg");
-//	Resource imagenResource = new NamedByteArrayResource(imageBytes, "comprobante.jpg");
 	    log.info("Subiendo archivo a WhatsApp con tamaño {} bytes", img.length);
 	    id = clientMultipart.uploadMedia(multipartFile, "whatsapp", "Bearer " + auth).get("id").toString();
 	    log.info("Imagen subida con éxito, ID: {}", id);
