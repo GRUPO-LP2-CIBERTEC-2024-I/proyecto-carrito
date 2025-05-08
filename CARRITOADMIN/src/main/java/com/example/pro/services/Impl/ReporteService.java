@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -34,6 +35,7 @@ public class ReporteService implements IReporteServices {
 	JRBeanCollectionDataSource detalle = new JRBeanCollectionDataSource((Collection<?>) ventaSaved.getDetalles());
 	Cliente cli = ventaSaved.getCli();
 	Map<String, Object> params = new HashMap<>(mapper.convertValue(ventaSaved, Map.class));
+	params.put("REPORT_LOCALE", new Locale("es", "ES"));
 	params.put("detalle", detalle);
 	params.put("logo", logo);
 	params.put("nombre", cli.getNombres());

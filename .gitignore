@@ -3,4 +3,5 @@
 node_modules/
 # Ignorar todos los .properties
 #*.properties
-CARRITOADMIN/src/main/resources/dialogflow-key.json
+#CARRITOADMIN/src/main/resources/dialogflow-key.json
+*dialogflow-key.json
